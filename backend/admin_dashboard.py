@@ -61,7 +61,10 @@ def get_all_errors(pumps):
                 "pump_name": f"{pump['marca']} {pump['modelo']}",
                 "codigo": error["codigo_pantalla"],
                 "video_tag": error["video_tag"],
-                "significado": error["significado"]
+                "significado": error["significado"],
+                "prioridad": error.get("prioridad", "media"),
+                "categoria": error.get("categoria", "general"),
+                "accion_correctiva": error.get("accion_correctiva", "")
             })
     return errors
 
@@ -72,11 +75,12 @@ def main():
     st.markdown("**Gestión de contenido educativo - Video-Bicicleta**")
     
     # Sidebar
-    st.sidebar.image("https://via.placeholder.com/200x80?text=LANKAMAR", use_container_width=True)
+    st.sidebar.markdown("### 🏥 LANKAMAR")
+    st.sidebar.markdown("*Simulador BIC*")
     st.sidebar.markdown("---")
     menu = st.sidebar.radio(
         "Navegación",
-        ["📹 Videos", "📊 Estadísticas", "🔧 Validación de Datos"]
+        ["🔍 Buscar Errores", "📹 Videos", "📊 Estadísticas", "🔧 Validación de Datos", "📥 Exportar"]
     )
     
     # Cargar datos
@@ -84,12 +88,57 @@ def main():
     manifest = load_content_manifest()
     all_errors = get_all_errors(pumps)
     
-    if menu == "📹 Videos":
+    if menu == "🔍 Buscar Errores":
+        render_search_section(all_errors)
+    elif menu == "📹 Videos":
         render_videos_section(pumps, manifest, all_errors)
     elif menu == "📊 Estadísticas":
-        render_stats_section(manifest, pumps)
+        render_stats_section(manifest, pumps, all_errors)
+    elif menu == "📥 Exportar":
+        render_export_section(pumps, all_errors)
     else:
         render_validation_section(pumps)
+
+
+def render_search_section(all_errors):
+    """Sección de búsqueda de errores"""
+    st.header("🔍 Buscar Errores y Alarmas")
+    
+    # Filtros
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        search_term = st.text_input("🔎 Buscar por código o descripción", "")
+    with col2:
+        pumps_list = list(set(e["pump_name"] for e in all_errors))
+        selected_pump = st.selectbox("Bomba", ["Todas"] + sorted(pumps_list))
+    with col3:
+        categories = list(set(e["categoria"] for e in all_errors))
+        selected_cat = st.selectbox("Categoría", ["Todas"] + sorted(categories))
+    
+    # Filtrar
+    filtered = all_errors
+    if search_term:
+        search_lower = search_term.lower()
+        filtered = [e for e in filtered if search_lower in e["codigo"].lower() 
+                   or search_lower in e["significado"].lower()]
+    if selected_pump != "Todas":
+        filtered = [e for e in filtered if e["pump_name"] == selected_pump]
+    if selected_cat != "Todas":
+        filtered = [e for e in filtered if e["categoria"] == selected_cat]
+    
+    st.markdown(f"**{len(filtered)} resultados encontrados**")
+    st.markdown("---")
+    
+    # Mostrar resultados
+    for error in filtered:
+        priority_color = {"critica": "🔴", "alta": "🟠", "media": "🟡", "informativa": "🟢"}
+        icon = priority_color.get(error["prioridad"], "⚪")
+        
+        with st.expander(f"{icon} {error['codigo']} - {error['pump_name']}"):
+            st.markdown(f"**Significado:** {error['significado']}")
+            st.markdown(f"**Acción correctiva:** {error['accion_correctiva']}")
+            st.markdown(f"**Categoría:** `{error['categoria']}` | **Prioridad:** `{error['prioridad']}`")
+            st.markdown(f"**Video tag:** `{error['video_tag']}`")
 
 
 def render_videos_section(pumps, manifest, all_errors):
@@ -170,8 +219,8 @@ def render_videos_section(pumps, manifest, all_errors):
             st.info("No hay videos registrados aún. Agregá uno desde el formulario.")
 
 
-def render_stats_section(manifest, pumps):
-    """Sección de estadísticas"""
+def render_stats_section(manifest, pumps, all_errors):
+    """Sección de estadísticas con gráficos"""
     st.header("📊 Estadísticas de Uso")
     
     # Métricas generales
@@ -180,7 +229,7 @@ def render_stats_section(manifest, pumps):
     total_videos = len(manifest.get("videos", []))
     total_views = sum(v.get("views_count", 0) for v in manifest.get("videos", []))
     total_pumps = len(pumps)
-    total_errors = sum(len(p.get("errores_y_alarmas", [])) for p in pumps)
+    total_errors = len(all_errors)
     
     col1.metric("Videos", total_videos)
     col2.metric("Vistas Totales", total_views)
@@ -189,20 +238,24 @@ def render_stats_section(manifest, pumps):
     
     st.markdown("---")
     
-    # Tabla de videos por vistas
-    if manifest.get("videos"):
-        st.subheader("Top Videos por Consultas")
-        videos_sorted = sorted(
-            manifest["videos"], 
-            key=lambda x: x.get("views_count", 0), 
-            reverse=True
-        )
-        
-        for v in videos_sorted[:10]:
-            st.markdown(
-                f"- **{v['video_tag']}** ({v['platform']}): "
-                f"`{v['views_count']}` consultas"
-            )
+    # Gráficos
+    col_chart1, col_chart2 = st.columns(2)
+    
+    with col_chart1:
+        st.subheader("Errores por Bomba")
+        pump_counts = {}
+        for e in all_errors:
+            pump_counts[e["pump_name"]] = pump_counts.get(e["pump_name"], 0) + 1
+        st.bar_chart(pump_counts)
+    
+    with col_chart2:
+        st.subheader("Errores por Categoría")
+        cat_counts = {}
+        for e in all_errors:
+            cat_counts[e["categoria"]] = cat_counts.get(e["categoria"], 0) + 1
+        st.bar_chart(cat_counts)
+    
+    st.markdown("---")
     
     # Cobertura por bomba
     st.subheader("Cobertura de Videos por Bomba")
@@ -261,6 +314,107 @@ def render_validation_section(pumps):
     )
     idx = [f"{p['marca']} {p['modelo']}" for p in pumps].index(selected_pump)
     st.json(pumps[idx])
+
+
+def render_validation_section(pumps):
+    """Sección de validación de datos"""
+    st.header("🔧 Validación de Datos")
+    
+    issues = []
+    
+    for pump in pumps:
+        pump_name = f"{pump['marca']} {pump['modelo']}"
+        
+        # Verificar campos obligatorios
+        required_fields = ["id", "marca", "modelo", "tipo", "specs_tecnicas", "errores_y_alarmas"]
+        for field in required_fields:
+            if field not in pump:
+                issues.append(f"❌ **{pump_name}**: Falta campo `{field}`")
+        
+        # Verificar specs técnicas
+        specs = pump.get("specs_tecnicas", {})
+        required_specs = ["rango_flujo", "volumen_max", "tipo_set", "bateria"]
+        for spec in required_specs:
+            if spec not in specs:
+                issues.append(f"⚠️ **{pump_name}**: Falta spec `{spec}`")
+        
+        # Verificar errores
+        for error in pump.get("errores_y_alarmas", []):
+            if not error.get("video_tag"):
+                issues.append(
+                    f"⚠️ **{pump_name}**: Error `{error.get('codigo_pantalla')}` sin video_tag"
+                )
+    
+    if issues:
+        st.warning(f"Se encontraron {len(issues)} problemas:")
+        for issue in issues:
+            st.markdown(issue)
+    else:
+        st.success("✅ Todos los datos están completos y validados")
+    
+    # Mostrar estructura JSON
+    st.subheader("Vista de Datos")
+    selected_pump = st.selectbox(
+        "Ver datos de bomba:",
+        [f"{p['marca']} {p['modelo']}" for p in pumps]
+    )
+    idx = [f"{p['marca']} {p['modelo']}" for p in pumps].index(selected_pump)
+    st.json(pumps[idx])
+
+
+def render_export_section(pumps, all_errors):
+    """Sección de exportación de datos"""
+    st.header("📥 Exportar Datos")
+    
+    st.markdown("Descargá los datos en formato CSV para análisis externo.")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Errores y Alarmas")
+        # Crear CSV de errores
+        csv_errors = "Bomba,Código,Significado,Categoría,Prioridad,Acción Correctiva,Video Tag\n"
+        for e in all_errors:
+            csv_errors += f'"{e["pump_name"]}","{e["codigo"]}","{e["significado"]}","{e["categoria"]}","{e["prioridad"]}","{e["accion_correctiva"]}","{e["video_tag"]}"\n'
+        
+        st.download_button(
+            label="📥 Descargar Errores (CSV)",
+            data=csv_errors,
+            file_name="lankamar_errores.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
+        st.caption(f"{len(all_errors)} errores en total")
+    
+    with col2:
+        st.subheader("Datos de Bombas")
+        # Crear CSV de bombas
+        csv_pumps = "ID,Marca,Modelo,Tipo,Rango Flujo,Batería,Cantidad Errores\n"
+        for p in pumps:
+            specs = p.get("specs_tecnicas", {})
+            n_errors = len(p.get("errores_y_alarmas", []))
+            csv_pumps += f'"{p["id"]}","{p["marca"]}","{p["modelo"]}","{p["tipo"]}","{specs.get("rango_flujo", "")}","{specs.get("bateria", "")}",{n_errors}\n'
+        
+        st.download_button(
+            label="📥 Descargar Bombas (CSV)",
+            data=csv_pumps,
+            file_name="lankamar_bombas.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
+        st.caption(f"{len(pumps)} bombas en total")
+    
+    st.markdown("---")
+    st.subheader("JSON Completo")
+    
+    import json as json_module
+    st.download_button(
+        label="📥 Descargar Base de Datos Completa (JSON)",
+        data=json_module.dumps(pumps, indent=2, ensure_ascii=False),
+        file_name="pumps_db_export.json",
+        mime="application/json",
+        use_container_width=True
+    )
 
 
 if __name__ == "__main__":

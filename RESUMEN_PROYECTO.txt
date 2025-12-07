@@ -1,0 +1,59 @@
+# 📋 RESUMEN PROYECTO SIMULADOR BIC LANKAMAR
+# Fecha: 2025-12-07
+# Para: Marcelo (lankamar@gmail.com)
+
+===============================================
+🔔 MENSAJE PARA MARCELO:
+
+Hola Marcelo! Este es el resumen del trabajo que hicimos hoy
+en el Simulador BIC Lankamar. Guardalo por si se reinicia 
+la sesión y necesitás retomar. Todo el código quedó guardado
+en tu máquina en la ubicación que figura abajo.
+
+¡Buen descanso!
+===============================================
+
+## ✅ COMPLETADO HOY
+
+1. Base de datos de bombas - 77+ errores/alarmas para 7 bombas
+2. Campos datos_incompletos limpiados
+3. AppTheme integrado en main.dart
+4. Tema oscuro UCI funcional
+5. Dashboard Python mejorado:
+   - Búsqueda de errores con filtros
+   - Gráficos de estadísticas
+   - Exportación CSV/JSON
+
+## ⏳ PENDIENTE
+
+1. Instalar Flutter SDK:
+   # Descargar desde flutter.dev o:
+   choco install flutter
+
+2. Probar app Flutter:
+   cd c:\Users\Marcelo\.gemini\antigravity\scratch\simulador-bic-lankamar
+   flutter pub get
+   flutter run
+
+3. Mejoras visuales Flutter:
+   - Animaciones y transiciones premium
+   - Gradientes y sombras en cards
+   - Consistencia de widgets botonera
+
+## 🚀 PARA RETOMAR
+
+# Dashboard Python:
+cd c:\Users\Marcelo\.gemini\antigravity\scratch\simulador-bic-lankamar\backend
+streamlit run admin_dashboard.py
+# Abrir http://localhost:8501
+
+## 📁 ARCHIVOS CLAVE
+
+- data/pumps_db.json - 77+ alarmas documentadas
+- lib/main.dart - App Flutter con AppTheme
+- backend/admin_dashboard.py - Dashboard mejorado
+- lib/app_theme.dart - Tema clínico con colores corporativos
+
+## 📍 UBICACIÓN DEL PROYECTO
+
+c:\Users\Marcelo\.gemini\antigravity\scratch\simulador-bic-lankamar

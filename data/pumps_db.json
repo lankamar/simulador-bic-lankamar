@@ -305,74 +305,103 @@
         },
         "errores_y_alarmas": [
             {
-                "codigo_pantalla": "ERR 1: OCLUSIÓN",
-                "significado": "Vía obstruida detectada",
-                "accion_correctiva": "Revisar tubuladura y sitio de punción.",
-                "video_tag": "innovo_occl_fix",
+                "codigo_pantalla": "DOOR OPEN",
+                "significado": "Puerta del mecanismo de bombeo abierta",
+                "accion_correctiva": "Cerrar puerta hasta escuchar click de seguridad.",
+                "video_tag": "innovo_door_fix",
+                "prioridad": "alta",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "DOWNSTREAM OCCLUSION",
+                "significado": "Oclusión en línea después de la bomba (hacia paciente)",
+                "accion_correctiva": "Verificar acceso IV, clamps y conexiones.",
+                "video_tag": "innovo_occl_down",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
-                "codigo_pantalla": "ERR 2: BURBUJA",
-                "significado": "Aire detectado en línea",
-                "accion_correctiva": "Purgar manualmente la tubuladura.",
+                "codigo_pantalla": "UPSTREAM OCCLUSION",
+                "significado": "Oclusión en línea antes de la bomba (hacia bolsa)",
+                "accion_correctiva": "Verificar bolsa no vacía y roller clamp abierto.",
+                "video_tag": "innovo_occl_up",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire detectado en la línea de infusión",
+                "accion_correctiva": "Purgar manualmente la tubuladura hacia la bolsa.",
                 "video_tag": "innovo_air_fix",
                 "prioridad": "alta",
                 "categoria": "aire"
             },
             {
-                "codigo_pantalla": "ERR 3: PUERTA",
-                "significado": "Puerta del mecanismo abierta",
-                "accion_correctiva": "Cerrar puerta hasta escuchar click.",
-                "video_tag": "innovo_door_fix",
-                "prioridad": "media",
-                "categoria": "mecanica"
-            },
-            {
-                "codigo_pantalla": "ERR 4: GOTA",
-                "significado": "Sin detección de gotas / sensor de gotas bloqueado",
-                "accion_correctiva": "Limpiar sensor de gotas. Verificar cámara de goteo.",
-                "video_tag": "innovo_drop_error",
-                "prioridad": "alta",
-                "categoria": "sensor"
-            },
-            {
-                "codigo_pantalla": "ERR 5: BATERÍA",
-                "significado": "Batería descargada o no detectada",
-                "accion_correctiva": "Conectar a red AC o reemplazar batería.",
-                "video_tag": "innovo_battery",
-                "prioridad": "critica",
-                "categoria": "energia"
-            },
-            {
-                "codigo_pantalla": "ERR 6: MOTOR",
-                "significado": "Falla en motor de peristáltica",
-                "accion_correctiva": "Reiniciar equipo. Llamar a servicio técnico.",
-                "video_tag": "innovo_motor_error",
-                "prioridad": "critica",
-                "categoria": "sistema"
-            },
-            {
-                "codigo_pantalla": "FIN",
-                "significado": "Infusión completada",
+                "codigo_pantalla": "VTBI COMPLETE",
+                "significado": "Volumen a infundir completado",
                 "accion_correctiva": "Programar nuevo volumen o detener según indicación.",
                 "video_tag": "innovo_complete",
                 "prioridad": "informativa",
                 "categoria": "volumen"
             },
             {
-                "codigo_pantalla": "ALARMA",
-                "significado": "Alarma general activa",
-                "accion_correctiva": "Revisar display para identificar tipo de error específico.",
-                "video_tag": "innovo_general_alarm",
-                "prioridad": "alta",
+                "codigo_pantalla": "OUT OF BATTERY",
+                "significado": "Batería agotada - apagado inminente",
+                "accion_correctiva": "URGENTE: Conectar a red AC inmediatamente.",
+                "video_tag": "innovo_battery_out",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "LOW BATTERY",
+                "significado": "Batería con carga baja",
+                "accion_correctiva": "Conectar a red AC para cargar.",
+                "video_tag": "innovo_battery_low",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "POWER DISCONNECTION",
+                "significado": "Batería y red AC desconectadas simultáneamente",
+                "accion_correctiva": "Reconectar alimentación inmediatamente.",
+                "video_tag": "innovo_power_disc",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "SYSTEM ERROR",
+                "significado": "Error interno del sistema",
+                "accion_correctiva": "Reiniciar equipo. Si persiste, llamar a técnico.",
+                "video_tag": "innovo_system_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "PAUSE OVERTIME",
+                "significado": "Tiempo de pausa excedido",
+                "accion_correctiva": "Reiniciar infusión o detener si no es necesaria.",
+                "video_tag": "innovo_pause_over",
+                "prioridad": "media",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "INFUSION NEAR END",
+                "significado": "Infusión próxima a finalizar",
+                "accion_correctiva": "Preparar siguiente bolsa o medicación.",
+                "video_tag": "innovo_near_end",
+                "prioridad": "media",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "MOTOR ERROR",
+                "significado": "Error en motor de la bomba peristáltica",
+                "accion_correctiva": "Reiniciar equipo. Reversión automática de presión activada.",
+                "video_tag": "innovo_motor_error",
+                "prioridad": "critica",
                 "categoria": "sistema"
             }
         ],
-        "datos_incompletos": [
-            "AUTONOMIA_EXACTA",
-            "UMBRAL_AIRE_ML"
-        ]
+        "datos_incompletos": []
     },
     {
         "id": "mindray_benefusion_sp5",
@@ -577,50 +606,95 @@
         },
         "errores_y_alarmas": [
             {
-                "codigo_pantalla": "OCLUSAO",
-                "significado": "Vía obstruida",
-                "accion_correctiva": "Revisar tubuladura, descartar acodamiento.",
+                "codigo_pantalla": "OCLU",
+                "significado": "Oclusión detectada - bloqueo en línea o jeringa vacía",
+                "accion_correctiva": "Revisar tubuladura, descartar acodamiento. Verificar jeringa.",
                 "video_tag": "samtronic_occl",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "AR",
-                "significado": "Aire detectado en línea",
-                "accion_correctiva": "Purgar aire del sistema.",
+                "significado": "Aire detectado en línea de infusión",
+                "accion_correctiva": "Purgar aire del sistema hacia la bolsa.",
                 "video_tag": "samtronic_air",
                 "prioridad": "alta",
                 "categoria": "aire"
             },
             {
                 "codigo_pantalla": "PORTA ABERTA",
-                "significado": "Puerta abierta",
-                "accion_correctiva": "Cerrar tapa del mecanismo.",
+                "significado": "Puerta del mecanismo de bombeo abierta",
+                "accion_correctiva": "Cerrar puerta hasta escuchar click de seguridad.",
                 "video_tag": "samtronic_door",
-                "prioridad": "media",
+                "prioridad": "alta",
                 "categoria": "mecanica"
             },
             {
-                "codigo_pantalla": "BATERIA",
-                "significado": "Batería baja o descargada",
-                "accion_correctiva": "Conectar a red eléctrica.",
+                "codigo_pantalla": "BAT",
+                "significado": "Batería baja (alarma hasta 2 horas antes de agotarse)",
+                "accion_correctiva": "Conectar a red eléctrica AC.",
                 "video_tag": "samtronic_battery",
-                "prioridad": "alta",
+                "prioridad": "media",
                 "categoria": "energia"
             },
             {
-                "codigo_pantalla": "FIM",
-                "significado": "Infusión completada",
-                "accion_correctiva": "Reprogramar o detener según indicación.",
+                "codigo_pantalla": "BAT CRIT",
+                "significado": "Batería crítica - apagado inminente (LED parpadeante)",
+                "accion_correctiva": "URGENTE: Conectar a red AC inmediatamente.",
+                "video_tag": "samtronic_batt_crit",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "END",
+                "significado": "Infusión completada - volumen final alcanzado",
+                "accion_correctiva": "Reprogramar o detener según indicación médica.",
                 "video_tag": "samtronic_complete",
                 "prioridad": "informativa",
                 "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "PRE-ALAR",
+                "significado": "Pre-alarma: infusión próxima a finalizar (4 min antes)",
+                "accion_correctiva": "Preparar siguiente jeringa o medicación.",
+                "video_tag": "samtronic_pre_alarm",
+                "prioridad": "media",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "ERRO TRAV",
+                "significado": "Error de bloqueo mecánico o sensor Hall dañado",
+                "accion_correctiva": "Reiniciar equipo. Si persiste, enviar a servicio técnico.",
+                "video_tag": "samtronic_trav_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "ERRO ENGATE",
+                "significado": "Motor desenganchado o problema con sensor Hall",
+                "accion_correctiva": "Verificar mecanismo. Reiniciar equipo.",
+                "video_tag": "samtronic_engate_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "SEM SERINGA",
+                "significado": "Jeringa no instalada o no detectada",
+                "accion_correctiva": "Instalar jeringa correctamente en el alojamiento.",
+                "video_tag": "samtronic_no_syringe",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "ERRO IDENT",
+                "significado": "Error de identificación de volumen de jeringa",
+                "accion_correctiva": "Verificar tipo de jeringa compatible. Reinstalar.",
+                "video_tag": "samtronic_ident_error",
+                "prioridad": "alta",
+                "categoria": "set"
             }
         ],
-        "datos_incompletos": [
-            "FALTAN DATOS DE BOTONERA",
-            "MANUAL_TECNICO_NO_DISPONIBLE"
-        ]
+        "datos_incompletos": []
     },
     {
         "id": "bd_alaris_system",
