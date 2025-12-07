@@ -10,15 +10,32 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final PumpService _pumpService = PumpService();
   List<Pump> _pumps = [];
   bool _isLoading = true;
+  
+  // Animaciones para las tarjetas
+  AnimationController? _animationController;
 
   @override
   void initState() {
     super.initState();
     _loadPumps();
+  }
+  
+  @override
+  void dispose() {
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  void _setupAnimations() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300 + (_pumps.length * 100)),
+    );
+    _animationController!.forward();
   }
 
   Future<void> _loadPumps() async {
@@ -28,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _pumps = pumps;
         _isLoading = false;
       });
+      _setupAnimations();
     } catch (e) {
       setState(() => _isLoading = false);
       if (mounted) {
@@ -134,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(16),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
-                      (context, index) => _buildPumpCard(_pumps[index]),
+                      (context, index) => _buildAnimatedPumpCard(_pumps[index], index),
                       childCount: _pumps.length,
                     ),
                   ),
@@ -213,6 +231,36 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  /// Tarjeta de bomba con animación staggered
+  Widget _buildAnimatedPumpCard(Pump pump, int index) {
+    if (_animationController == null) {
+      return _buildPumpCard(pump);
+    }
+    
+    // Calcular intervalos para animación escalonada
+    final double startInterval = (index * 0.1).clamp(0.0, 0.7);
+    final double endInterval = (startInterval + 0.3).clamp(0.0, 1.0);
+    
+    final animation = CurvedAnimation(
+      parent: _animationController!,
+      curve: Interval(startInterval, endInterval, curve: Curves.easeOutCubic),
+    );
+    
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, 30 * (1 - animation.value)),
+          child: Opacity(
+            opacity: animation.value,
+            child: child,
+          ),
+        );
+      },
+      child: _buildPumpCard(pump),
     );
   }
 
