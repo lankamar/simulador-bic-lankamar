@@ -104,6 +104,17 @@ def render_search_section(all_errors):
     """Sección de búsqueda de errores"""
     st.header("🔍 Buscar Errores y Alarmas")
     
+    # Colores por marca (consistentes con Flutter)
+    BRAND_COLORS = {
+        "baxter": "#005EB8",
+        "b. braun": "#009640", 
+        "innovo": "#455A64",
+        "mindray": "#00ACC1",
+        "samtronic": "#EF6C00",
+        "bd": "#7B1FA2",
+        "fresenius kabi": "#01579B"
+    }
+    
     # Filtros
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -129,16 +140,39 @@ def render_search_section(all_errors):
     st.markdown(f"**{len(filtered)} resultados encontrados**")
     st.markdown("---")
     
-    # Mostrar resultados
+    # Agrupar por bomba
+    from collections import defaultdict
+    grouped = defaultdict(list)
     for error in filtered:
-        priority_color = {"critica": "🔴", "alta": "🟠", "media": "🟡", "informativa": "🟢"}
-        icon = priority_color.get(error["prioridad"], "⚪")
+        grouped[error["pump_name"]].append(error)
+    
+    # Mostrar agrupado por bomba
+    for pump_name in sorted(grouped.keys()):
+        errors = grouped[pump_name]
+        # Obtener color de la marca
+        marca = pump_name.split()[0].lower()
+        color = BRAND_COLORS.get(marca, "#6B7280")
         
-        with st.expander(f"{icon} {error['codigo']} - {error['pump_name']}"):
-            st.markdown(f"**Significado:** {error['significado']}")
-            st.markdown(f"**Acción correctiva:** {error['accion_correctiva']}")
-            st.markdown(f"**Categoría:** `{error['categoria']}` | **Prioridad:** `{error['prioridad']}`")
-            st.markdown(f"**Video tag:** `{error['video_tag']}`")
+        # Header de bomba con color
+        st.markdown(f"""
+        <div style="background: linear-gradient(90deg, {color}22, transparent); 
+                    padding: 10px 15px; border-left: 4px solid {color}; 
+                    border-radius: 0 8px 8px 0; margin: 15px 0 10px 0;">
+            <strong style="color: {color}; font-size: 16px;">💉 {pump_name}</strong>
+            <span style="color: #666; margin-left: 10px;">({len(errors)} errores)</span>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Errores de esta bomba
+        for error in errors:
+            priority_icon = {"critica": "🔴", "alta": "🟠", "media": "🟡", "informativa": "🟢"}
+            icon = priority_icon.get(error["prioridad"], "⚪")
+            
+            with st.expander(f"{icon} {error['codigo']}"):
+                st.markdown(f"**Significado:** {error['significado']}")
+                st.markdown(f"**Acción correctiva:** {error['accion_correctiva']}")
+                st.markdown(f"**Categoría:** `{error['categoria']}` | **Prioridad:** `{error['prioridad']}`")
+                st.markdown(f"**Video tag:** `{error['video_tag']}`")
 
 
 def render_videos_section(pumps, manifest, all_errors):
