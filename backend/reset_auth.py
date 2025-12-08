@@ -47,19 +47,14 @@ def reset_auth():
     ceo_name = "Marcelo (CEO)"
     
     try:
-        # Verificar que no exista
-        existing_user = get_user_by_email(ceo_email)
-        if existing_user:
-            print(f"[!] Usuario {ceo_email} ya existe")
-        else:
-            # Crear usuario CEO
-            user_id = create_user(
-                email=ceo_email,
-                password=ceo_password,
-                role=ceo_role,
-                name=ceo_name
-            )
-            print(f"[✓] Usuario CEO creado exitosamente (ID: {user_id})")
+        # Crear usuario CEO (no debería existir después del reset)
+        user_id = create_user(
+            email=ceo_email,
+            password=ceo_password,
+            role=ceo_role,
+            name=ceo_name
+        )
+        print(f"[✓] Usuario CEO creado exitosamente (ID: {user_id})")
     except Exception as e:
         print(f"[✗] Error al crear usuario: {e}")
         return False

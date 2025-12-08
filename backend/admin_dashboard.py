@@ -21,6 +21,7 @@ from invites_service import (
 )
 from db import get_db_stats, DB_PATH, init_db, get_conn
 from auth_service import create_user, get_user_by_email
+import sqlite3
 
 # Configuración de página
 st.set_page_config(
@@ -29,6 +30,12 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Credenciales por defecto del CEO (para auto-inicialización)
+DEFAULT_CEO_EMAIL = "lankamar@gmail.com"
+DEFAULT_CEO_PASSWORD = "password123"
+DEFAULT_CEO_ROLE = "ceo"
+DEFAULT_CEO_NAME = "Marcelo (CEO)"
 
 # Rutas de archivos (usando ruta absoluta para evitar problemas de directorio de trabajo)
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -87,12 +94,12 @@ def main():
     if not DB_PATH.exists():
         init_db()
         # Crear usuario CEO por defecto
-        if not get_user_by_email("lankamar@gmail.com"):
+        if not get_user_by_email(DEFAULT_CEO_EMAIL):
             create_user(
-                email="lankamar@gmail.com",
-                password="password123",
-                role="ceo",
-                name="Marcelo (CEO)"
+                email=DEFAULT_CEO_EMAIL,
+                password=DEFAULT_CEO_PASSWORD,
+                role=DEFAULT_CEO_ROLE,
+                name=DEFAULT_CEO_NAME
             )
     else:
         # Verificar si la DB está vacía (sin usuarios)
@@ -101,22 +108,22 @@ def main():
                 user_count = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
                 if user_count == 0:
                     # DB existe pero está vacía, crear usuario CEO
-                    if not get_user_by_email("lankamar@gmail.com"):
+                    if not get_user_by_email(DEFAULT_CEO_EMAIL):
                         create_user(
-                            email="lankamar@gmail.com",
-                            password="password123",
-                            role="ceo",
-                            name="Marcelo (CEO)"
+                            email=DEFAULT_CEO_EMAIL,
+                            password=DEFAULT_CEO_PASSWORD,
+                            role=DEFAULT_CEO_ROLE,
+                            name=DEFAULT_CEO_NAME
                         )
-        except Exception:
+        except (sqlite3.DatabaseError, sqlite3.OperationalError):
             # Si hay error accediendo a la DB, reinicializarla
             init_db()
-            if not get_user_by_email("lankamar@gmail.com"):
+            if not get_user_by_email(DEFAULT_CEO_EMAIL):
                 create_user(
-                    email="lankamar@gmail.com",
-                    password="password123",
-                    role="ceo",
-                    name="Marcelo (CEO)"
+                    email=DEFAULT_CEO_EMAIL,
+                    password=DEFAULT_CEO_PASSWORD,
+                    role=DEFAULT_CEO_ROLE,
+                    name=DEFAULT_CEO_NAME
                 )
     
     # Obtener autenticador desde SQLite
