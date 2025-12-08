@@ -139,7 +139,7 @@ def main():
         
         # Header
         st.title("💉 Lankamar Admin Dashboard")
-        
+
         # Badge de rol con color
         role_colors = {
             "ceo": "🔴",
@@ -149,48 +149,92 @@ def main():
         }
         role_badge = role_colors.get(role, "⚪")
         st.markdown(f"**Bienvenido, {display_name}** | {role_badge} Rol: `{role.upper()}`")
-        
-        # Sidebar con logout y navegación
-        with st.sidebar:
-            authenticator.logout("🚪 Cerrar Sesión", "sidebar")
-            st.markdown("---")
-            
-            # Info de sesión
-            st.caption(f"📧 {username}")
-            
-            # Menú dinámico según rol
-            opciones = get_menu_options(role)
-            menu = st.radio("📋 Navegación", opciones)
-            
-            # Stats rápidos para CEO
-            if role == "ceo":
-                st.markdown("---")
-                st.caption("📊 Quick Stats")
-                db_stats = get_db_stats()
-                st.metric("Usuarios", db_stats["users"])
-                inv_stats = get_invite_stats()
-                st.metric("Invitaciones pendientes", inv_stats["pendientes"])
-        
+
+        # Detectar mobile via query param `?mobile=true`
+        params = st.experimental_get_query_params()
+        is_mobile = str(params.get("mobile", ["false"])[0]).lower() == "true"
+
+        # Opciones de menú dinámico según rol
+        opciones = get_menu_options(role)
+
         # Cargar datos
         pumps = load_pumps()
         manifest = load_content_manifest()
         all_errors = get_all_errors(pumps)
-        
-        # Routing según menú
-        if menu == "🔍 Buscar Errores":
-            render_search_section(all_errors)
-        elif menu == "📹 Videos":
-            render_videos_section(pumps, manifest, all_errors)
-        elif menu == "📊 Estadísticas":
-            render_stats_section(manifest, pumps, all_errors)
-        elif menu == "📥 Exportar":
-            render_export_section(pumps, all_errors)
-        elif menu == "🔧 Validación":
-            render_validation_section(pumps)
-        elif menu == "👥 Usuarios":
-            render_users_section()
-        elif menu == "🎫 Invitaciones":
-            render_invites_section()
+
+        if is_mobile:
+            # Estilos para mobile: botones más grandes, evitar sidebar
+            st.markdown(
+                """
+                <style>
+                .css-1emrehy button, .stButton>button {width:100% !important; font-size:16px !important; padding:12px 10px !important}
+                .stExpander {font-size:16px}
+                </style>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            # Usar tabs en la parte superior para navegación mobile
+            tabs = st.tabs(opciones)
+            # renderizar cada tab en orden
+            for i, tab in enumerate(tabs):
+                with tab:
+                    sel = opciones[i]
+                    if sel == "🔍 Buscar Errores":
+                        render_search_section(all_errors)
+                    elif sel == "📹 Videos":
+                        render_videos_section(pumps, manifest, all_errors)
+                    elif sel == "📊 Estadísticas":
+                        render_stats_section(manifest, pumps, all_errors)
+                    elif sel == "📥 Exportar":
+                        render_export_section(pumps, all_errors)
+                    elif sel == "🔧 Validación":
+                        render_validation_section(pumps)
+                    elif sel == "👥 Usuarios":
+                        render_users_section()
+                    elif sel == "🎫 Invitaciones":
+                        render_invites_section()
+
+            # Compartir link rápido en mobile (instrucción)
+            st.markdown("---")
+            st.info("Compartí este enlace (mobile optimizado): agregá `?mobile=true` al final de la URL de la app")
+
+        else:
+            # Desktop: sidebar con logout y navegación
+            with st.sidebar:
+                authenticator.logout("🚪 Cerrar Sesión", "sidebar")
+                st.markdown("---")
+
+                # Info de sesión
+                st.caption(f"📧 {username}")
+
+                # Menú dinámico según rol
+                menu = st.radio("📋 Navegación", opciones)
+
+                # Stats rápidos para CEO
+                if role == "ceo":
+                    st.markdown("---")
+                    st.caption("📊 Quick Stats")
+                    db_stats = get_db_stats()
+                    st.metric("Usuarios", db_stats["users"])
+                    inv_stats = get_invite_stats()
+                    st.metric("Invitaciones pendientes", inv_stats["pendientes"])
+
+            # Routing según menú
+            if menu == "🔍 Buscar Errores":
+                render_search_section(all_errors)
+            elif menu == "📹 Videos":
+                render_videos_section(pumps, manifest, all_errors)
+            elif menu == "📊 Estadísticas":
+                render_stats_section(manifest, pumps, all_errors)
+            elif menu == "📥 Exportar":
+                render_export_section(pumps, all_errors)
+            elif menu == "🔧 Validación":
+                render_validation_section(pumps)
+            elif menu == "👥 Usuarios":
+                render_users_section()
+            elif menu == "🎫 Invitaciones":
+                render_invites_section()
     
     elif authentication_status is False:
         st.error("❌ Usuario o contraseña incorrectos")

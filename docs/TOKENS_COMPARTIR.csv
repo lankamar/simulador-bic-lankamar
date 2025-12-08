@@ -1,0 +1,6 @@
+Token,Rol,Valido_por_horas,Descripcion
+INVITACION_VIEWER_ABC123,Viewer,72,Para enfermeros
+INVITACION_VIEWER_DEF456,Viewer,72,Para estudiantes
+INVITACION_VIEWER_GHI789,Viewer,72,Para docentes
+INVITACION_ADMIN_JKL012,Admin,168,Para administradores
+INVITACION_CEO_MNO345,CEO,168,Para gestor principal

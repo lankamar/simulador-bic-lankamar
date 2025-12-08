@@ -52,6 +52,13 @@ streamlit run admin_dashboard.py
 flutter run
 ```
 
+## 🚪 Acceso Público
+
+- 💻 Desktop: https://simulador-bic-lankamar-mhua3wowwbhztwwbbcdwyq.streamlit.app
+- 📱 Mobile (optimizado): https://simulador-bic-lankamar-mhua3wowwbhztwwbbcdwyq.streamlit.app?mobile=true
+
+Recomendación: para usuarios en celular compartí el link con `?mobile=true`.
+
 ## 📄 Licencia
 
 Propietario: **Marcelo Lancry (Lankamar)** - Todos los derechos reservados.
