@@ -68,10 +68,10 @@ def get_authenticator(
     credentials = build_credentials_dict()
     
     authenticator = stauth.Authenticate(
-        credentials=credentials,
-        cookie_name=cookie_name,
-        cookie_key=cookie_key,
-        cookie_expiry_days=cookie_expiry_days
+        credentials,
+        cookie_name,
+        cookie_key,
+        cookie_expiry_days
     )
     
     return authenticator, credentials
