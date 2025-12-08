@@ -3,7 +3,7 @@ from datetime import date
 from pathlib import Path
 
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_LEFT
+from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
@@ -14,7 +14,8 @@ from reportlab.platypus import (Paragraph, SimpleDocTemplate, Spacer, Table,
 def load_bombas():
     data_path = Path(__file__).resolve().parent.parent / "data" / "bombas_especificaciones.json"
     with open(data_path, encoding="utf-8") as fp:
-        return json.load(fp)
+        payload = json.load(fp)
+    return payload.get("bombas", [])
 
 
 def build_cover(story, styles):
@@ -32,96 +33,90 @@ def build_cover(story, styles):
 
 
 def add_bomb_section(story, styles, bomba):
-    story.append(Paragraph(bomba["name"], styles["Heading2"]))
-    story.append(Paragraph(f"Fabricante: {bomba['manufacturer']}", styles["Normal"],))
+    contenido_es = bomba.get("contenido", {}).get("es", {})
+    titulo = contenido_es.get("titulo_pdf") or contenido_es.get("nombre_comercial") or bomba.get("modelo", "Sin nombre")
+    story.append(Paragraph(titulo, styles["Heading2"]))
+    fabricante = bomba.get("fabricante_id", "")
+    modelo = bomba.get("modelo", "").strip()
+    tipo = bomba.get("tipo", "-")
+    story.append(Paragraph(f"Fabricante: {fabricante} · Modelo: {modelo} · Tipo: {tipo}", styles["Normal"]))
     story.append(Spacer(1, 0.1 * inch))
 
-    specs_data = [
-        ["Dimensiones", bomba["specs"]["dimensions"]],
-        ["Peso", bomba["specs"]["weight"]],
-        ["Batería", bomba["specs"]["battery_type"]],
-        ["Pantalla", bomba["specs"]["display"]],
+    parametros = bomba.get("parametros_tecnicos", {})
+    rango = parametros.get("rango_infusion_ml_h")
+    rango_text = f"{rango[0]} - {rango[1]} ml/h" if isinstance(rango, list) and len(rango) == 2 else "-"
+    precision = parametros.get("precision_porcentaje", "-")
+    volumen_max = parametros.get("volumen_max_ml", "-")
+    presion_max = parametros.get("presion_max_psi", "-")
+    tipo_display = parametros.get("tipo_display", "-")
+    alimentacion = ", ".join(parametros.get("alimentacion", [])) or "-"
+
+    tech_rows = [
+        ["Rango de infusión", rango_text],
+        ["Precisión", f"{precision} %" if isinstance(precision, (int, float)) else precision],
+        ["Volumen máximo", f"{volumen_max} ml" if isinstance(volumen_max, (int, float)) else volumen_max],
+        ["Presión máxima", f"{presion_max} psi" if isinstance(presion_max, (int, float)) else presion_max],
+        ["Pantalla", tipo_display],
+        ["Alimentación", alimentacion],
     ]
-    specs_table = Table(specs_data, colWidths=[2.5 * inch, 3.5 * inch])
-    specs_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#003f87")),
-        ("TEXTCOLOR", (0, 0), (-1, -1), colors.white),
-        ("BACKGROUND", (0, 1), (-1, -1), colors.whitesmoke),
-        ("GRID", (0, 0), (-1, -1), 0.5, colors.gray),
-        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
-        ("ALIGN", (0, 0), (0, -1), "LEFT"),
-    ]))
-    story.append(Paragraph("Especificaciones técnicas", styles["Heading3"]))
-    story.append(specs_table)
-    story.append(Spacer(1, 0.2 * inch))
-
-    story.append(Paragraph("Vista frontal", styles["NormalBold"]))
-    front_buttons = " · ".join(btn["name"] for btn in bomba["buttons"])
-    story.append(Paragraph(bomba["views"]["frontal"]["description"], styles["Normal"]))
-    story.append(Paragraph(f"Botones clave: {front_buttons}", styles["CustomItalic"]))
-    story.append(Spacer(1, 0.1 * inch))
-
-    story.append(Paragraph("Vista trasera", styles["NormalBold"]))
-    story.append(Paragraph(bomba["views"]["trasera"]["description"], styles["Normal"]))
-    story.append(Spacer(1, 0.2 * inch))
-
-    button_rows = [["Nombre", "Ubicación", "Función"]] + [
-        [btn["name"], btn["location"], btn["function"]]
-        for btn in bomba["buttons"]
-    ]
-    button_table = Table(button_rows, colWidths=[2.5 * inch, 2 * inch, 3 * inch])
-    button_table.setStyle(TableStyle([
-        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0066cc")),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("BACKGROUND", (0, 1), (-1, -1), colors.beige),
+    tech_table = Table(tech_rows, colWidths=[2.5 * inch, 4 * inch])
+    tech_table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), colors.whitesmoke),
         ("GRID", (0, 0), (-1, -1), 0.3, colors.gray),
-        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("FONTNAME", (0, 0), (-1, -1), "Helvetica"),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
     ]))
-    story.append(Paragraph("Tabla de botones", styles["Heading3"]))
-    story.append(button_table)
+    story.append(Paragraph("Parámetros técnicos", styles["Heading3"]))
+    story.append(tech_table)
     story.append(Spacer(1, 0.2 * inch))
 
-    story.append(Paragraph("Procedimientos", styles["Heading3"]))
-    for op in bomba["operations"]:
-        story.append(Paragraph(op["name"], styles["NormalBold"]))
-        steps = "\n".join(f"{idx}. {step}" for idx, step in enumerate(op["steps"], start=1))
-        story.append(Paragraph(steps, styles["Normal"]))
-        story.append(Paragraph(f"Guía de video: {op['video_url']}", styles["CustomItalicSmall"]))
+    descripcion = contenido_es.get("descripcion_clinica")
+    if descripcion:
+        story.append(Paragraph("Descripción clínica", styles["NormalBold"]))
+        story.append(Paragraph(descripcion, styles["Normal"]))
         story.append(Spacer(1, 0.1 * inch))
+
+    observaciones = contenido_es.get("observaciones", [])
+    if observaciones:
+        story.append(Paragraph("Observaciones", styles["NormalBold"]))
+        for obs in observaciones:
+            story.append(Paragraph(f"• {obs}", styles["Normal"]))
+        story.append(Spacer(1, 0.1 * inch))
+
+    diagrama = bomba.get("diagramas", {}).get("ascii")
+    if diagrama:
+        if isinstance(diagrama, list):
+            diagrama_text = "\n".join(diagrama)
+        else:
+            diagrama_text = diagrama
+        story.append(Paragraph("Diagrama ASCII", styles["NormalBold"]))
+        story.append(Paragraph(diagrama_text, styles["Monospace"]))
+        story.append(Spacer(1, 0.2 * inch))
 
     story.append(PageBreak())
 
 
 def build_comparison_table(story, bombas, styles):
     story.append(Paragraph("Tabla comparativa", styles["Heading1"]))
-    headers = ["Característica"] + [bomba["name"] for bomba in bombas]
+    headers = ["Nombre", "Tipo", "Rango", "Precisión"]
     rows = [headers]
 
-    def present_availability(bomba, op_key):
-        item = next((op for op in bomba["operations"] if op_key in op["name"].lower()), None)
-        if not item:
-            return "-"
-        available = item.get("available")
-        if available is False:
-            return "-"
-        return "✓"
+    def format_range_value(rango):
+        if isinstance(rango, list) and len(rango) == 2:
+            return f"{rango[0]} - {rango[1]}"
+        return "-"
 
-    features = [
-        ("Pantalla", lambda b: b["specs"]["display"]),
-        ("Goteo nuevo", lambda b: "✓"),
-        ("Paralelo", lambda b: present_availability(b, "paralelo")),
-        ("Bolo", lambda b: present_availability(b, "bolo")),
-        ("Drug Library", lambda b: "-"),
-        ("Peso", lambda b: b["specs"]["weight"]),
-        ("Batería", lambda b: b["specs"]["battery_type"]),
-        ("Apilable", lambda b: "-"),
-    ]
+    for bomba in bombas:
+        contenido_es = bomba.get("contenido", {}).get("es", {})
+        nombre = contenido_es.get("nombre_comercial") or contenido_es.get("titulo_pdf") or bomba.get("modelo", "-")
+        tipo = bomba.get("tipo", "-")
+        parametros = bomba.get("parametros_tecnicos", {})
+        rango_text = format_range_value(parametros.get("rango_infusion_ml_h"))
+        precision = parametros.get("precision_porcentaje")
+        precision_text = f"{precision} %" if isinstance(precision, (int, float)) else "-"
+        rows.append([nombre, tipo, rango_text, precision_text])
 
-    for feature, extractor in features:
-        row = [feature] + [extractor(bomba) for bomba in bombas]
-        rows.append(row)
-
-    table = Table(rows, repeatRows=1)
+    table = Table(rows, repeatRows=1, colWidths=[2.6 * inch, 1.4 * inch, 2.2 * inch, 1.4 * inch])
     table.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b4f6c")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
@@ -146,15 +141,20 @@ def build_appendix(story, styles, bombas):
         story.append(Paragraph(f"• {term}", styles["Normal"]))
     story.append(Spacer(1, 0.2 * inch))
 
-    story.append(Paragraph("Referencias de videos educativos", styles["Heading3"]))
-    unique_videos = []
+    story.append(Paragraph("Referencias técnicas", styles["Heading3"]))
+    unique_urls = []
     for bomba in bombas:
-        for op in bomba["operations"]:
-            url = op.get("video_url")
-            if url and url not in unique_videos:
-                unique_videos.append(url)
-    for idx, video in enumerate(unique_videos, start=1):
-        story.append(Paragraph(f"{idx}. {video}", styles["Normal"]))
+        referencias = bomba.get("referencias", {})
+        for key in ("manuales", "fichas"):
+            for ref in referencias.get(key, []):
+                url = ref.get("url")
+                if url and url not in unique_urls:
+                    unique_urls.append(url)
+    if unique_urls:
+        for idx, url in enumerate(unique_urls, start=1):
+            story.append(Paragraph(f"{idx}. {url}", styles["Normal"]))
+    else:
+        story.append(Paragraph("No se registraron referencias adicionales.", styles["Normal"]))
 
 
 def build_styles():
@@ -200,6 +200,12 @@ def build_styles():
         alignment=TA_CENTER,
         fontSize=10,
         textColor=colors.gray,
+    ))
+    styles.add(ParagraphStyle(
+        name="Monospace",
+        parent=styles["Normal"],
+        fontName="Courier",
+        leading=12,
     ))
     return styles
 
