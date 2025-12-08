@@ -19,7 +19,9 @@ from invites_service import (
     create_invite, list_invites, revoke_invite, 
     get_invite_stats, redeem_invite, cleanup_expired_invites
 )
-from db import get_db_stats, DB_PATH
+from db import get_db_stats, DB_PATH, init_db, get_conn
+from auth_service import create_user, get_user_by_email
+import sqlite3
 
 # Configuración de página
 st.set_page_config(
@@ -28,6 +30,12 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Credenciales por defecto del CEO (para auto-inicialización)
+DEFAULT_CEO_EMAIL = "lankamar@gmail.com"
+DEFAULT_CEO_PASSWORD = "password123"
+DEFAULT_CEO_ROLE = "ceo"
+DEFAULT_CEO_NAME = "Marcelo (CEO)"
 
 # Rutas de archivos (usando ruta absoluta para evitar problemas de directorio de trabajo)
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -82,18 +90,41 @@ def get_all_errors(pumps):
 def main():
     """Función principal del dashboard con autenticación SQLite"""
     
-    # Verificar si la DB existe, si no, mostrar instrucciones
+    # Auto-inicializar DB si no existe o está vacía
     if not DB_PATH.exists():
-        st.error("⚠️ Base de datos no inicializada")
-        st.markdown("""
-        ### Pasos para inicializar:
-        ```bash
-        cd backend
-        python db.py                    # Crear base de datos
-        python migrate_from_yaml.py     # Migrar usuarios existentes
-        ```
-        """)
-        return
+        init_db()
+        # Crear usuario CEO por defecto
+        if not get_user_by_email(DEFAULT_CEO_EMAIL):
+            create_user(
+                email=DEFAULT_CEO_EMAIL,
+                password=DEFAULT_CEO_PASSWORD,
+                role=DEFAULT_CEO_ROLE,
+                name=DEFAULT_CEO_NAME
+            )
+    else:
+        # Verificar si la DB está vacía (sin usuarios)
+        try:
+            with get_conn() as conn:
+                user_count = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+                if user_count == 0:
+                    # DB existe pero está vacía, crear usuario CEO
+                    if not get_user_by_email(DEFAULT_CEO_EMAIL):
+                        create_user(
+                            email=DEFAULT_CEO_EMAIL,
+                            password=DEFAULT_CEO_PASSWORD,
+                            role=DEFAULT_CEO_ROLE,
+                            name=DEFAULT_CEO_NAME
+                        )
+        except (sqlite3.DatabaseError, sqlite3.OperationalError):
+            # Si hay error accediendo a la DB, reinicializarla
+            init_db()
+            if not get_user_by_email(DEFAULT_CEO_EMAIL):
+                create_user(
+                    email=DEFAULT_CEO_EMAIL,
+                    password=DEFAULT_CEO_PASSWORD,
+                    role=DEFAULT_CEO_ROLE,
+                    name=DEFAULT_CEO_NAME
+                )
     
     # Obtener autenticador desde SQLite
     authenticator, credentials = get_authenticator()
