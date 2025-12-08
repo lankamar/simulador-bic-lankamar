@@ -19,7 +19,8 @@ from invites_service import (
     create_invite, list_invites, revoke_invite, 
     get_invite_stats, redeem_invite, cleanup_expired_invites
 )
-from db import get_db_stats, DB_PATH
+from db import get_db_stats, DB_PATH, init_db, get_conn
+from auth_service import create_user, get_user_by_email
 
 # Configuración de página
 st.set_page_config(
@@ -82,18 +83,41 @@ def get_all_errors(pumps):
 def main():
     """Función principal del dashboard con autenticación SQLite"""
     
-    # Verificar si la DB existe, si no, mostrar instrucciones
+    # Auto-inicializar DB si no existe o está vacía
     if not DB_PATH.exists():
-        st.error("⚠️ Base de datos no inicializada")
-        st.markdown("""
-        ### Pasos para inicializar:
-        ```bash
-        cd backend
-        python db.py                    # Crear base de datos
-        python migrate_from_yaml.py     # Migrar usuarios existentes
-        ```
-        """)
-        return
+        init_db()
+        # Crear usuario CEO por defecto
+        if not get_user_by_email("lankamar@gmail.com"):
+            create_user(
+                email="lankamar@gmail.com",
+                password="password123",
+                role="ceo",
+                name="Marcelo (CEO)"
+            )
+    else:
+        # Verificar si la DB está vacía (sin usuarios)
+        try:
+            with get_conn() as conn:
+                user_count = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+                if user_count == 0:
+                    # DB existe pero está vacía, crear usuario CEO
+                    if not get_user_by_email("lankamar@gmail.com"):
+                        create_user(
+                            email="lankamar@gmail.com",
+                            password="password123",
+                            role="ceo",
+                            name="Marcelo (CEO)"
+                        )
+        except Exception:
+            # Si hay error accediendo a la DB, reinicializarla
+            init_db()
+            if not get_user_by_email("lankamar@gmail.com"):
+                create_user(
+                    email="lankamar@gmail.com",
+                    password="password123",
+                    role="ceo",
+                    name="Marcelo (CEO)"
+                )
     
     # Obtener autenticador desde SQLite
     authenticator, credentials = get_authenticator()
