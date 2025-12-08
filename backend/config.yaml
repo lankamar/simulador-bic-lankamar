@@ -1,0 +1,31 @@
+credentials:
+  usernames:
+    marcelo:
+      email: lankamar@gmail.com
+      name: Marcelo (CEO)
+      password: $2b$12$qayCsOO0RWD74uTUXXLs7uWQXJxs5gTjFhjgU0y/ZLxf0Cx4vU9My
+      role: ceo
+    director1:
+      email: director@hospital.com
+      name: Director Hospital
+      password: $2b$12$qayCsOO0RWD74uTUXXLs7uWQXJxs5gTjFhjgU0y/ZLxf0Cx4vU9My
+      role: director
+    jefe_enfermeria:
+      email: jefe@hospital.com
+      name: Jefe de Enfermeria
+      password: $2b$12$qayCsOO0RWD74uTUXXLs7uWQXJxs5gTjFhjgU0y/ZLxf0Cx4vU9My
+      role: jefe_servicio
+    enfermero1:
+      email: enfermero@hospital.com
+      name: Enfermero Usuario
+      password: $2b$12$qayCsOO0RWD74uTUXXLs7uWQXJxs5gTjFhjgU0y/ZLxf0Cx4vU9My
+      role: usuario
+
+cookie:
+  expiry_days: 30
+  key: lankamar_secret_key_2024
+  name: lankamar_auth
+
+pre-authorized:
+  emails:
+    - lankamar@gmail.com

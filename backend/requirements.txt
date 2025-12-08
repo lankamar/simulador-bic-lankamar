@@ -1,0 +1,15 @@
+# Backend Python - Simulador BIC Lankamar
+# Instalar con: pip install -r requirements.txt
+
+# Dashboard Web
+streamlit>=1.28.0
+
+# Autenticación
+streamlit-authenticator>=0.3.0
+bcrypt>=4.0.0
+
+# Configuración
+PyYAML>=6.0
+
+# Utilidades
+python-dateutil>=2.8.0
