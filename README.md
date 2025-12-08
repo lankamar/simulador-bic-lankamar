@@ -64,6 +64,11 @@ Recomendación: para usuarios en celular compartí el link con `?mobile=true`.
 - La app detecta el dispositivo móvil y recarga automáticamente con la interfaz táctil; no se requiere que el usuario agregue parámetros.
 - Para guiar la distribución y uso de tokens revisá `docs/DISTRIBUCION_PUBLICA.md`.
 
+## 📘 Guía de bombas impresa
+
+- Consulta el PDF `docs/SiBIC_BOMBAS_REFERENCIA.pdf` para tener una versión imprimible de las 7 bombas con procedimientos y tabla comparativa.
+- Para regenerar el PDF usa `scripts/generate_pdf_bombas.py` (requiere `reportlab`).
+
 ## 📄 Licencia
 
 Propietario: **Marcelo Lancry (Lankamar)** - Todos los derechos reservados.
