@@ -99,11 +99,10 @@ def main():
     authenticator, credentials = get_authenticator()
     
     # Login
-    authenticator.login()
+    name, authentication_status, username = authenticator.login('Login', 'main')
     
-    if st.session_state.get("authentication_status"):
+    if authentication_status:
         # Usuario logueado
-        username = st.session_state["username"]  # Es el email
         role = get_user_role(username, credentials)
         display_name = get_user_display_name(username, credentials)
         
@@ -122,7 +121,7 @@ def main():
         
         # Sidebar con logout y navegación
         with st.sidebar:
-            authenticator.logout("🚪 Cerrar Sesión")
+            authenticator.logout("🚪 Cerrar Sesión", "sidebar")
             st.markdown("---")
             
             # Info de sesión
@@ -162,7 +161,7 @@ def main():
         elif menu == "🎫 Invitaciones":
             render_invites_section()
     
-    elif st.session_state.get("authentication_status") is False:
+    elif authentication_status is False:
         st.error("❌ Usuario o contraseña incorrectos")
         st.info("💡 Si tenés un token de invitación, usalo abajo para registrarte")
         render_invite_redemption()
