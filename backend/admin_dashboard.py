@@ -3,13 +3,23 @@ Dashboard Admin - Simulador BIC Lankamar
 Panel web para gestión de Video-Bicicleta (contenido educativo)
 
 Ejecutar con: streamlit run admin_dashboard.py
+
+v2.0 - Autenticación con SQLite
 """
 
 import streamlit as st
 import json
-import os
 from datetime import datetime
 from pathlib import Path
+
+# Imports del sistema de autenticación SQLite
+from auth_adapter import get_authenticator, get_user_role, get_menu_options, get_user_display_name
+from auth_service import list_users, update_user_role, get_role_permissions, ROLES
+from invites_service import (
+    create_invite, list_invites, revoke_invite, 
+    get_invite_stats, redeem_invite, cleanup_expired_invites
+)
+from db import get_db_stats, DB_PATH
 
 # Configuración de página
 st.set_page_config(
@@ -70,49 +80,115 @@ def get_all_errors(pumps):
 
 
 def main():
-    # Header
-    st.title("💉 Lankamar Admin Dashboard")
-    st.markdown("**Gestión de contenido educativo - Video-Bicicleta**")
+    """Función principal del dashboard con autenticación SQLite"""
     
-    # Sidebar
-    st.sidebar.markdown("### 🏥 LANKAMAR")
-    st.sidebar.markdown("*Simulador BIC*")
-    st.sidebar.markdown("---")
-    menu = st.sidebar.radio(
-        "Navegación",
-        ["🔍 Buscar Errores", "📹 Videos", "📊 Estadísticas", "🔧 Validación de Datos", "📥 Exportar"]
-    )
+    # Verificar si la DB existe, si no, mostrar instrucciones
+    if not DB_PATH.exists():
+        st.error("⚠️ Base de datos no inicializada")
+        st.markdown("""
+        ### Pasos para inicializar:
+        ```bash
+        cd backend
+        python db.py                    # Crear base de datos
+        python migrate_from_yaml.py     # Migrar usuarios existentes
+        ```
+        """)
+        return
     
-    # Cargar datos
-    pumps = load_pumps()
-    manifest = load_content_manifest()
-    all_errors = get_all_errors(pumps)
+    # Obtener autenticador desde SQLite
+    authenticator, credentials = get_authenticator()
     
-    if menu == "🔍 Buscar Errores":
-        render_search_section(all_errors)
-    elif menu == "📹 Videos":
-        render_videos_section(pumps, manifest, all_errors)
-    elif menu == "📊 Estadísticas":
-        render_stats_section(manifest, pumps, all_errors)
-    elif menu == "📥 Exportar":
-        render_export_section(pumps, all_errors)
+    # Login
+    authenticator.login()
+    
+    if st.session_state.get("authentication_status"):
+        # Usuario logueado
+        username = st.session_state["username"]  # Es el email
+        role = get_user_role(username, credentials)
+        display_name = get_user_display_name(username, credentials)
+        
+        # Header
+        st.title("💉 Lankamar Admin Dashboard")
+        
+        # Badge de rol con color
+        role_colors = {
+            "ceo": "🔴",
+            "director": "🟠", 
+            "jefe_servicio": "🟡",
+            "usuario": "🟢"
+        }
+        role_badge = role_colors.get(role, "⚪")
+        st.markdown(f"**Bienvenido, {display_name}** | {role_badge} Rol: `{role.upper()}`")
+        
+        # Sidebar con logout y navegación
+        with st.sidebar:
+            authenticator.logout("🚪 Cerrar Sesión")
+            st.markdown("---")
+            
+            # Info de sesión
+            st.caption(f"📧 {username}")
+            
+            # Menú dinámico según rol
+            opciones = get_menu_options(role)
+            menu = st.radio("📋 Navegación", opciones)
+            
+            # Stats rápidos para CEO
+            if role == "ceo":
+                st.markdown("---")
+                st.caption("📊 Quick Stats")
+                db_stats = get_db_stats()
+                st.metric("Usuarios", db_stats["users"])
+                inv_stats = get_invite_stats()
+                st.metric("Invitaciones pendientes", inv_stats["pendientes"])
+        
+        # Cargar datos
+        pumps = load_pumps()
+        manifest = load_content_manifest()
+        all_errors = get_all_errors(pumps)
+        
+        # Routing según menú
+        if menu == "🔍 Buscar Errores":
+            render_search_section(all_errors)
+        elif menu == "📹 Videos":
+            render_videos_section(pumps, manifest, all_errors)
+        elif menu == "📊 Estadísticas":
+            render_stats_section(manifest, pumps, all_errors)
+        elif menu == "📥 Exportar":
+            render_export_section(pumps, all_errors)
+        elif menu == "🔧 Validación":
+            render_validation_section(pumps)
+        elif menu == "👥 Usuarios":
+            render_users_section()
+        elif menu == "🎫 Invitaciones":
+            render_invites_section()
+    
+    elif st.session_state.get("authentication_status") is False:
+        st.error("❌ Usuario o contraseña incorrectos")
+        st.info("💡 Si tenés un token de invitación, usalo abajo para registrarte")
+        render_invite_redemption()
     else:
-        render_validation_section(pumps)
+        st.info("👆 Ingresá tu email y contraseña para acceder")
+        st.markdown("---")
+        st.markdown("### ¿Tenés un token de invitación?")
+        render_invite_redemption()
 
 
 def render_search_section(all_errors):
     """Sección de búsqueda de errores"""
     st.header("🔍 Buscar Errores y Alarmas")
     
-    # Colores por marca (consistentes con Flutter)
-    BRAND_COLORS = {
-        "baxter": "#005EB8",
-        "b. braun": "#009640", 
-        "innovo": "#455A64",
-        "mindray": "#00ACC1",
-        "samtronic": "#EF6C00",
-        "bd": "#7B1FA2",
-        "fresenius kabi": "#01579B"
+    # Sistema de iconos y colores por CATEGORÍA (basado en UX/gamificación)
+    CATEGORY_STYLE = {
+        "oclusion": {"icon": "🚫", "color": "#E53935", "nombre": "Oclusión"},
+        "aire": {"icon": "🫧", "color": "#90CAF9", "nombre": "Aire en Línea"},
+        "flujo": {"icon": "💧", "color": "#3949AB", "nombre": "Flujo"},
+        "energia": {"icon": "🪫", "color": "#FFB300", "nombre": "Energía/Batería"},
+        "sistema": {"icon": "⚙️", "color": "#8D6E63", "nombre": "Sistema"},
+        "set": {"icon": "⚙️", "color": "#43A047", "nombre": "Configuración"},
+        "medicacion": {"icon": "💊", "color": "#D81B60", "nombre": "Medicación"},
+        "general": {"icon": "⚠️", "color": "#607D8B", "nombre": "General"},
+        "volumen": {"icon": "📊", "color": "#5C6BC0", "nombre": "Volumen"},
+        "mecanica": {"icon": "🔧", "color": "#795548", "nombre": "Mecánica"},
     }
     
     # Filtros
@@ -140,38 +216,44 @@ def render_search_section(all_errors):
     st.markdown(f"**{len(filtered)} resultados encontrados**")
     st.markdown("---")
     
-    # Agrupar por bomba
+    # Agrupar por CATEGORÍA
     from collections import defaultdict
     grouped = defaultdict(list)
     for error in filtered:
-        grouped[error["pump_name"]].append(error)
+        grouped[error["categoria"]].append(error)
     
-    # Mostrar agrupado por bomba
-    for pump_name in sorted(grouped.keys()):
-        errors = grouped[pump_name]
-        # Obtener color de la marca
-        marca = pump_name.split()[0].lower()
-        color = BRAND_COLORS.get(marca, "#6B7280")
+    # Mostrar agrupado por categoría con iconos
+    for categoria in sorted(grouped.keys()):
+        errors = grouped[categoria]
+        # Obtener estilo de la categoría
+        style = CATEGORY_STYLE.get(categoria, CATEGORY_STYLE["general"])
+        icon = style["icon"]
+        color = style["color"]
+        nombre = style["nombre"]
         
-        # Header de bomba con color
+        # Header de categoría con color e icono
         st.markdown(f"""
         <div style="background: linear-gradient(90deg, {color}22, transparent); 
-                    padding: 10px 15px; border-left: 4px solid {color}; 
-                    border-radius: 0 8px 8px 0; margin: 15px 0 10px 0;">
-            <strong style="color: {color}; font-size: 16px;">💉 {pump_name}</strong>
-            <span style="color: #666; margin-left: 10px;">({len(errors)} errores)</span>
+                    padding: 12px 18px; border-left: 5px solid {color}; 
+                    border-radius: 0 10px 10px 0; margin: 20px 0 12px 0;
+                    display: flex; align-items: center;">
+            <span style="font-size: 28px; margin-right: 12px;">{icon}</span>
+            <div>
+                <strong style="color: {color}; font-size: 18px;">{nombre.upper()}</strong>
+                <span style="color: #666; margin-left: 10px; font-size: 14px;">({len(errors)} errores)</span>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Errores de esta bomba
+        # Errores de esta categoría
         for error in errors:
             priority_icon = {"critica": "🔴", "alta": "🟠", "media": "🟡", "informativa": "🟢"}
-            icon = priority_icon.get(error["prioridad"], "⚪")
+            p_icon = priority_icon.get(error["prioridad"], "⚪")
             
-            with st.expander(f"{icon} {error['codigo']}"):
+            with st.expander(f"{p_icon} {error['codigo']} — {error['pump_name']}"):
                 st.markdown(f"**Significado:** {error['significado']}")
                 st.markdown(f"**Acción correctiva:** {error['accion_correctiva']}")
-                st.markdown(f"**Categoría:** `{error['categoria']}` | **Prioridad:** `{error['prioridad']}`")
+                st.markdown(f"**Bomba:** `{error['pump_name']}` | **Prioridad:** `{error['prioridad']}`")
                 st.markdown(f"**Video tag:** `{error['video_tag']}`")
 
 
@@ -451,5 +533,237 @@ def render_export_section(pumps, all_errors):
     )
 
 
+# ============================================================
+# SECCIONES DE GESTIÓN DE USUARIOS E INVITACIONES (Solo CEO)
+# ============================================================
+
+def render_users_section():
+    """Sección de gestión de usuarios - Solo CEO"""
+    st.header("👥 Gestión de Usuarios")
+    
+    users = list_users()
+    
+    # Métricas
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Total Usuarios", len(users))
+    
+    role_counts = {}
+    for u in users:
+        role_counts[u["role"]] = role_counts.get(u["role"], 0) + 1
+    
+    col2.metric("CEOs", role_counts.get("ceo", 0))
+    col3.metric("Directores", role_counts.get("director", 0))
+    col4.metric("Usuarios", role_counts.get("usuario", 0))
+    
+    st.markdown("---")
+    
+    # Tabla de usuarios
+    st.subheader("📋 Lista de Usuarios")
+    
+    for user in users:
+        role_icons = {
+            "ceo": "🔴",
+            "director": "🟠",
+            "jefe_servicio": "🟡",
+            "usuario": "🟢"
+        }
+        icon = role_icons.get(user["role"], "⚪")
+        
+        with st.expander(f"{icon} {user['email']} — {user.get('name', 'Sin nombre')}"):
+            col1, col2 = st.columns([2, 1])
+            
+            with col1:
+                st.markdown(f"**Email:** {user['email']}")
+                st.markdown(f"**Rol actual:** `{user['role']}`")
+                st.markdown(f"**Último login:** {user.get('last_login_at', 'Nunca')}")
+                st.markdown(f"**Creado:** {user.get('created_at', 'N/A')[:10]}")
+            
+            with col2:
+                if user["role"] != "ceo":  # No permitir cambiar al CEO
+                    new_role = st.selectbox(
+                        "Cambiar rol a:",
+                        ["usuario", "jefe_servicio", "director"],
+                        key=f"role_select_{user['id']}"
+                    )
+                    if st.button("✅ Aplicar cambio", key=f"role_btn_{user['id']}"):
+                        update_user_role(user["id"], new_role)
+                        st.success(f"Rol actualizado a: {new_role}")
+                        st.rerun()
+                else:
+                    st.info("🔒 CEO no editable")
+
+
+def render_invites_section():
+    """Sección de gestión de invitaciones - Solo CEO"""
+    st.header("🎫 Sistema de Invitaciones")
+    
+    tab1, tab2, tab3 = st.tabs(["➕ Crear Nueva", "📋 Pendientes", "📜 Historial"])
+    
+    with tab1:
+        st.subheader("Crear Nueva Invitación")
+        
+        st.markdown("""
+        Las invitaciones permiten:
+        - 🆕 **Usuarios nuevos**: Se registran con el rol asignado
+        - 🔼 **Usuarios existentes**: Elevan su rol al especificado
+        """)
+        
+        with st.form("create_invite_form"):
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                inv_role = st.selectbox(
+                    "Rol a otorgar",
+                    list(ROLES.keys()),
+                    format_func=lambda x: f"{ROLES[x]['nombre']} (nivel {ROLES[x]['nivel']})"
+                )
+            
+            with col2:
+                inv_hours = st.number_input(
+                    "Validez (horas)",
+                    min_value=1,
+                    max_value=720,  # 30 días
+                    value=72  # 3 días
+                )
+            
+            inv_email = st.text_input(
+                "Email específico (opcional)",
+                placeholder="Dejar vacío para invitación abierta"
+            )
+            
+            st.caption("💡 Si especificás un email, solo esa persona podrá usar el token")
+            
+            submitted = st.form_submit_button("🎫 Generar Token de Invitación", use_container_width=True)
+            
+            if submitted:
+                try:
+                    token = create_invite(
+                        role=inv_role,
+                        email=inv_email.strip() if inv_email.strip() else None,
+                        hours_valid=inv_hours
+                    )
+                    st.success("✅ ¡Invitación creada exitosamente!")
+                    st.code(token, language=None)
+                    st.info(f"""
+                    📧 Compartí este token con el invitado.
+                    
+                    **Instrucciones para el invitado:**
+                    1. Ir a la página de login
+                    2. Pegar el token en "¿Tenés un token de invitación?"
+                    3. Ingresar email y contraseña
+                    4. ¡Listo! Tendrá rol de **{inv_role.upper()}**
+                    """)
+                except ValueError as e:
+                    st.error(f"Error: {e}")
+    
+    with tab2:
+        st.subheader("Invitaciones Pendientes")
+        
+        # Limpiar expiradas
+        if st.button("🧹 Limpiar expiradas"):
+            cleaned = cleanup_expired_invites()
+            st.success(f"Se eliminaron {cleaned} invitaciones expiradas")
+            st.rerun()
+        
+        invites = list_invites(include_used=False)
+        
+        if not invites:
+            st.info("No hay invitaciones pendientes")
+        else:
+            for inv in invites:
+                status_icon = {"pendiente": "🟡", "usado": "✅", "expirado": "⏰"}
+                icon = status_icon.get(inv.get("status", "pendiente"), "⚪")
+                
+                role_name = ROLES.get(inv["role"], {}).get("nombre", inv["role"])
+                
+                with st.expander(f"{icon} Token para **{role_name}** — {inv.get('status', 'pendiente')}"):
+                    st.code(inv["token"], language=None)
+                    
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown(f"**Rol:** {role_name}")
+                        if inv["email"]:
+                            st.markdown(f"**Para:** {inv['email']}")
+                        else:
+                            st.markdown("**Para:** Cualquiera (abierta)")
+                    
+                    with col2:
+                        st.markdown(f"**Expira:** {inv['expires_at'][:16] if inv['expires_at'] else 'Nunca'}")
+                        st.markdown(f"**Creada:** {inv['created_at'][:16]}")
+                    
+                    if st.button("❌ Revocar", key=f"revoke_{inv['id']}"):
+                        revoke_invite(inv["token"])
+                        st.success("Invitación revocada")
+                        st.rerun()
+    
+    with tab3:
+        st.subheader("Historial Completo")
+        
+        all_invites = list_invites(include_used=True, include_expired=True)
+        
+        if not all_invites:
+            st.info("No hay invitaciones en el historial")
+        else:
+            # Stats
+            stats = get_invite_stats()
+            cols = st.columns(4)
+            cols[0].metric("Total", stats["total"])
+            cols[1].metric("Pendientes", stats["pendientes"])
+            cols[2].metric("Usadas", stats["usadas"])
+            cols[3].metric("Expiradas", stats["expiradas"])
+            
+            st.markdown("---")
+            
+            for inv in all_invites:
+                status = inv.get("status", "pendiente")
+                status_colors = {"pendiente": "🟡", "usado": "✅", "expirado": "⏰"}
+                
+                st.markdown(f"""
+                {status_colors.get(status, '⚪')} `{inv['token'][:20]}...` → **{inv['role']}** 
+                | Estado: {status} | {inv['created_at'][:10]}
+                """)
+
+
+def render_invite_redemption():
+    """Formulario para canjear una invitación (visible en login)"""
+    
+    with st.expander("🎫 Canjear Token de Invitación", expanded=False):
+        st.markdown("""
+        Si recibiste un token de invitación, usalo aquí para:
+        - **Crear tu cuenta** con un rol especial
+        - **Elevar tu rol** si ya tenés cuenta
+        """)
+        
+        with st.form("redeem_invite_form"):
+            token = st.text_input("Token de invitación", placeholder="Pegá tu token aquí")
+            email = st.text_input("Tu email", placeholder="tu@email.com")
+            password = st.text_input("Contraseña", type="password", 
+                                    placeholder="Solo si sos usuario nuevo")
+            
+            st.caption("⚠️ La contraseña solo es requerida para usuarios nuevos")
+            
+            submitted = st.form_submit_button("🚀 Canjear Invitación", use_container_width=True)
+            
+            if submitted:
+                if not token or not email:
+                    st.error("Token y email son requeridos")
+                else:
+                    try:
+                        result = redeem_invite(
+                            token=token.strip(),
+                            email=email.strip(),
+                            password=password if password else None
+                        )
+                        st.success(f"✅ {result['message']}")
+                        if result["is_new_user"]:
+                            st.info("Ahora podés iniciar sesión con tu email y contraseña")
+                        else:
+                            st.info("Tu rol ha sido actualizado. Cerrá sesión y volvé a entrar para ver los cambios.")
+                        st.balloons()
+                    except ValueError as e:
+                        st.error(f"Error: {e}")
+
+
 if __name__ == "__main__":
     main()
+
