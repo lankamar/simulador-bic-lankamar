@@ -69,15 +69,22 @@ def check_system():
     if db_path.exists():
         try:
             from auth_service import authenticate
-            test_email = os.environ.get('TEST_EMAIL', 'lankamar@gmail.com')
-            test_password = os.environ.get('TEST_PASSWORD', 'password123')
-            test_result = authenticate(test_email, test_password)
-            if test_result:
-                print(f"✅ Test de login exitoso")
-                checks.append(True)
+            # Only test if credentials are explicitly provided via environment variables
+            test_email = os.environ.get('TEST_EMAIL')
+            test_password = os.environ.get('TEST_PASSWORD')
+            
+            if test_email and test_password:
+                test_result = authenticate(test_email, test_password)
+                if test_result:
+                    print(f"✅ Test de login exitoso")
+                    checks.append(True)
+                else:
+                    print(f"❌ Test de login falló con credenciales de prueba")
+                    checks.append(False)
             else:
-                print(f"❌ Test de login falló con credenciales de prueba")
-                checks.append(False)
+                print(f"⚠️  Test de login omitido (no hay TEST_EMAIL/TEST_PASSWORD)")
+                print(f"   Ejecutar con: TEST_EMAIL=user@email.com TEST_PASSWORD=pass python check_auth.py")
+                checks.append(True)  # Not a failure, just skipped
         except Exception as e:
             print(f"❌ Error en test de login: {e}")
             checks.append(False)
