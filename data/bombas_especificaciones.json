@@ -1,0 +1,478 @@
+[
+  {
+    "id": "baxter_sigma_spectrum",
+    "name": "Baxter Sigma Spectrum",
+    "manufacturer": "Baxter",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "40 x 20 x 10 cm",
+      "weight": "3.2 kg",
+      "battery_type": "Ion de litio recargable",
+      "display": "Pantalla LCD retroiluminada"
+    },
+    "views": {
+      "frontal": {
+        "description": "Panel frontal con teclado numérico y pantalla LCD de lectura clara.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Vista lateral con ranura para termostatos y sensores.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Conectores de alimentación, puerto de servicio y entradas de alarma.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_sigma_start",
+        "name": "Start",
+        "location": "bottom_center",
+        "function": "Inicia la administración del goteo programado",
+        "related_errors": [101, 115]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Encender la bomba",
+          "Seleccionar terapia (Volumen o Tasa)",
+          "Ingresar parámetros del paciente y confirmar"
+        ],
+        "video_url": "https://placeholder.com/video/sigma-program",
+        "difficulty": "intermediate"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": false,
+        "steps": [
+          "Configurar canales separados",
+          "Revisar alarmas cruzadas"
+        ],
+        "video_url": "https://placeholder.com/video/sigma-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Seleccionar modo bolo",
+          "Confirmar volumen y velocidad",
+          "Iniciar bolo"
+        ],
+        "video_url": "https://placeholder.com/video/sigma-bolus",
+        "difficulty": "basic"
+      }
+    ]
+  },
+  {
+    "id": "bbraun_infusomat_space",
+    "name": "B. Braun Infusomat Space",
+    "manufacturer": "B. Braun",
+    "category": "Syringe Pump",
+    "specs": {
+      "dimensions": "38 x 18 x 12 cm",
+      "weight": "2.4 kg",
+      "battery_type": "NiMH recargable",
+      "display": "LCD monocromo con iconografía clara"
+    },
+    "views": {
+      "frontal": {
+        "description": "Teclado con botones grandes y pantalla contrastada para doble línea.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Indicadores de carga y bloqueo de jeringa.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Puertos de batería y servicios con protecciones plásticas.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_space_dose",
+        "name": "Dose",
+        "location": "bottom_right",
+        "function": "Confirma la dosis calculada",
+        "related_errors": [202]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Seleccionar tipo de terapia",
+          "Ingresar volumen/tiempo",
+          "Confirmar con tecla Dose"
+        ],
+        "video_url": "https://placeholder.com/video/space-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": true,
+        "steps": [
+          "Verificar canal libre",
+          "Asignar terapia y sincronizar tiempos"
+        ],
+        "video_url": "https://placeholder.com/video/space-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Activar modo bolo",
+          "Ingresar volumen en ml",
+          "Ejecutar con botón Start"
+        ],
+        "video_url": "https://placeholder.com/video/space-bolus",
+        "difficulty": "intermediate"
+      }
+    ]
+  },
+  {
+    "id": "innovo_mi20",
+    "name": "Innovo MI-20",
+    "manufacturer": "Innovo",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "36 x 22 x 12 cm",
+      "weight": "3.8 kg",
+      "battery_type": "Ion de litio extraíble",
+      "display": "Pantalla TFT a color"
+    },
+    "views": {
+      "frontal": {
+        "description": "Teclado táctil con iconos grandes y alerta sonora configurada.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Sistema de bloqueo de perfusiones y soporte para tubos.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Conectores para sensores y salida de alarma acústica.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_innovo_confirm",
+        "name": "Confirm",
+        "location": "bottom_center",
+        "function": "Aprueba parámetros ingresados en pantalla",
+        "related_errors": [301, 303]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Elegir perfil de terapia",
+          "Configurar volumen total y flujo",
+          "Aprobar con Confirm"
+        ],
+        "video_url": "https://placeholder.com/video/mi20-program",
+        "difficulty": "intermediate"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": true,
+        "steps": [
+          "Activar opción multi-canal",
+          "Asignar tiempos y presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/mi20-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Seleccionar modo bolo",
+          "Definir duración y volumen",
+          "Iniciar con Start"
+        ],
+        "video_url": "https://placeholder.com/video/mi20-bolus",
+        "difficulty": "basic"
+      }
+    ]
+  },
+  {
+    "id": "mindray_benefusion_sp5",
+    "name": "Mindray BeneFusion SP5",
+    "manufacturer": "Mindray",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "41 x 28 x 16 cm",
+      "weight": "4.5 kg",
+      "battery_type": "Ion de litio inteligente",
+      "display": "Pantalla TFT con controles touch",
+    },
+    "views": {
+      "frontal": {
+        "description": "Panel con pantalla a color y botones táctiles iluminados.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Ranuras para módulos de comunicación y sensores.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Conectores de alarmas, red y alimentación + batería extra.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_benefusion_mark",
+        "name": "Mark",
+        "location": "top_left",
+        "function": "Marca el paso activo durante la programación",
+        "related_errors": [412]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Seleccionar categoría de solución",
+          "Ingresar volumen y tiempo",
+          "Confirmar usando Mark"
+        ],
+        "video_url": "https://placeholder.com/video/benefusion-program",
+        "difficulty": "intermediate"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": true,
+        "steps": [
+          "Configurar canal secundario",
+          "Sincronizar alarmas"
+        ],
+        "video_url": "https://placeholder.com/video/benefusion-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Activar modo bolo",
+          "Definir volumen grande y duración",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/benefusion-bolus",
+        "difficulty": "basic"
+      }
+    ]
+  },
+  {
+    "id": "samtronic_st670",
+    "name": "Samtronic ST-670",
+    "manufacturer": "Samtronic",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "39 x 25 x 15 cm",
+      "weight": "3.6 kg",
+      "battery_type": "Ion de litio 24 horas",
+      "display": "TFT con retroiluminación ajustable"
+    },
+    "views": {
+      "frontal": {
+        "description": "Panel principal con botones físicos y pantalla clara.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Sistema modular con acoples de tubos.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Puertos de red, sensor de bomba y entrada de energía.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_st670_pause",
+        "name": "Pause",
+        "location": "bottom_left",
+        "function": "Pausa la infusión en curso",
+        "related_errors": [521]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Seleccionar modalidad",
+          "Ingresar parámetros",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/st670-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": true,
+        "steps": [
+          "Conectar segundo canal",
+          "Sincronizar alarmas"
+        ],
+        "video_url": "https://placeholder.com/video/st670-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": false,
+        "steps": [
+          "Activar modo bolo directo en pantalla",
+          "Configurar volumen",
+          "Iniciar"
+        ],
+        "video_url": "https://placeholder.com/video/st670-bolus",
+        "difficulty": "intermediate"
+      }
+    ]
+  },
+  {
+    "id": "bd_alaris_system",
+    "name": "BD Alaris System",
+    "manufacturer": "BD",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "40 x 22 x 12 cm",
+      "weight": "3.9 kg",
+      "battery_type": "Ion de litio 24 h",
+      "display": "Pantalla LCD con botones táctiles laterales"
+    },
+    "views": {
+      "frontal": {
+        "description": "Panel con pantalla y botones de atajo para alarmas.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Indicadores de volumen y entrada de admin.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Puertos de red, extracción de batería y conectores de línea.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_alaris_silence",
+        "name": "Silence",
+        "location": "top_center",
+        "function": "Silencia alarmas temporariamente",
+        "related_errors": [601, 605]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Seleccionar terapia",
+          "Ingresar parámetros",
+          "Confirmar con Start"
+        ],
+        "video_url": "https://placeholder.com/video/alaris-program",
+        "difficulty": "intermediate"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": true,
+        "steps": [
+          "Validar canal secundario",
+          "Configurar alarmas gemelas"
+        ],
+        "video_url": "https://placeholder.com/video/alaris-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Seleccione el modo bolo",
+          "Defina volumen",
+          "Pulse Start"
+        ],
+        "video_url": "https://placeholder.com/video/alaris-bolus",
+        "difficulty": "basic"
+      }
+    ]
+  },
+  {
+    "id": "fresenius_agilia_vp",
+    "name": "Fresenius Kabi Agilia VP",
+    "manufacturer": "Fresenius Kabi",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "41 x 26 x 16 cm",
+      "weight": "4.6 kg",
+      "battery_type": "Ion de litio cíclico",
+      "display": "Pantalla TFT con menús guiados"
+    },
+    "views": {
+      "frontal": {
+        "description": "Interfaz gráfica con menús y botones de acceso rápido.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Estructura compacta con soporte de infusión.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Conectores para señales externas y red segura.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_agilia_next",
+        "name": "Next",
+        "location": "bottom_right",
+        "function": "Avanza paso por paso en la programación",
+        "related_errors": [702]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Seleccionar solución",
+          "Ingresar volumen y velocidad",
+          "Confirmar con Next"
+        ],
+        "video_url": "https://placeholder.com/video/agilia-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": true,
+        "steps": [
+          "Abrir segundo canal",
+          "Sincronizar alarmas"
+        ],
+        "video_url": "https://placeholder.com/video/agilia-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Activar modo bolo",
+          "Configurar volumen",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/agilia-bolus",
+        "difficulty": "intermediate"
+      }
+    ]
+  }
+]
