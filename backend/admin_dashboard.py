@@ -82,18 +82,39 @@ def get_all_errors(pumps):
 def main():
     """Función principal del dashboard con autenticación SQLite"""
     
-    # Verificar si la DB existe, si no, mostrar instrucciones
+    # Verificar e inicializar DB automáticamente
     if not DB_PATH.exists():
-        st.error("⚠️ Base de datos no inicializada")
-        st.markdown("""
-        ### Pasos para inicializar:
-        ```bash
-        cd backend
-        python db.py                    # Crear base de datos
-        python migrate_from_yaml.py     # Migrar usuarios existentes
-        ```
-        """)
-        return
+        st.warning("⚠️ Base de datos no encontrada. Inicializando automáticamente...")
+        try:
+            from db import init_db
+            from migrate_from_yaml import migrate_users, load_yaml_config
+            from pathlib import Path
+            
+            # Inicializar DB
+            init_db()
+            st.success("✅ Base de datos creada")
+            
+            # Intentar migración automática desde config.yaml
+            config_path = Path(__file__).resolve().parent / "config.yaml"
+            if config_path.exists():
+                config = load_yaml_config(config_path)
+                stats = migrate_users(config)
+                st.success(f"✅ Migrados {stats['migrated']} usuarios desde config.yaml")
+            
+            st.info("🔄 Refrescando página...")
+            st.rerun()
+            
+        except Exception as e:
+            st.error(f"❌ Error al inicializar: {e}")
+            st.markdown("""
+            ### Inicialización manual:
+            ```bash
+            cd backend
+            python db.py
+            python migrate_from_yaml.py
+            ```
+            """)
+            return
     
     # Obtener autenticador desde SQLite
     authenticator, credentials = get_authenticator()
