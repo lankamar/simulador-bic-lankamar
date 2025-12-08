@@ -196,20 +196,30 @@ def authenticate(email: str, password: str) -> Optional[Dict]:
         Dict con datos del usuario si las credenciales son válidas,
         None si son inválidas
     """
+    if not email or not password:
+        return None
+        
     user = get_user_by_email(email)
     
     if not user:
+        print("[AUTH] Autenticación fallida")
         return None
     
-    if not verify_password(password, user["password_hash"]):
+    try:
+        if not verify_password(password, user["password_hash"]):
+            print("[AUTH] Autenticación fallida")
+            return None
+    except Exception as e:
+        print(f"[AUTH] Error durante autenticación: {e}")
         return None
     
     # Actualizar último login
     update_last_login(user["id"])
     
     # Retornar sin el hash
-    del user["password_hash"]
-    return user
+    user_copy = dict(user)
+    del user_copy["password_hash"]
+    return user_copy
 
 
 def change_password(user_id: int, new_password: str) -> bool:
