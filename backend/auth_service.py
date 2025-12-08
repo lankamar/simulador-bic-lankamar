@@ -202,12 +202,12 @@ def authenticate(email: str, password: str) -> Optional[Dict]:
     user = get_user_by_email(email)
     
     if not user:
-        print(f"[AUTH] Usuario no encontrado: {email}")
+        print("[AUTH] Usuario no encontrado")
         return None
     
     try:
         if not verify_password(password, user["password_hash"]):
-            print(f"[AUTH] Contraseña incorrecta para: {email}")
+            print("[AUTH] Contraseña incorrecta")
             return None
     except Exception as e:
         print(f"[AUTH] Error verificando password: {e}")

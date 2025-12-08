@@ -1,10 +1,15 @@
 """
 Script de verificación del sistema de autenticación
 Uso: python check_auth.py
+
+Variables de entorno opcionales:
+  TEST_EMAIL: Email para test de autenticación (default: lankamar@gmail.com)
+  TEST_PASSWORD: Password para test (default: password123)
 """
 
 from pathlib import Path
 import sys
+import os
 
 def check_system():
     print("=" * 60)
@@ -64,9 +69,11 @@ def check_system():
     if db_path.exists():
         try:
             from auth_service import authenticate
-            test_result = authenticate("lankamar@gmail.com", "password123")
+            test_email = os.environ.get('TEST_EMAIL', 'lankamar@gmail.com')
+            test_password = os.environ.get('TEST_PASSWORD', 'password123')
+            test_result = authenticate(test_email, test_password)
             if test_result:
-                print(f"✅ Test de login exitoso: lankamar@gmail.com")
+                print(f"✅ Test de login exitoso")
                 checks.append(True)
             else:
                 print(f"❌ Test de login falló con credenciales de prueba")
