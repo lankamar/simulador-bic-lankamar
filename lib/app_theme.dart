@@ -16,6 +16,19 @@ class AppTheme {
   static const Color lcdText = Color(0xFF4FC3F7);
   static const Color lcdMonochrome = Color(0xFF2E7D32);
   
+  // Gradientes premium reutilizables
+  static LinearGradient get primaryGradient => const LinearGradient(
+    colors: [Color(0xFF0D47A1), Color(0xFF1976D2)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static LinearGradient get accentGradient => const LinearGradient(
+    colors: [Color(0xFF00873C), Color(0xFF33A24A)],
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+  );
+  
   /// Tema claro principal
   static ThemeData get lightTheme {
     return ThemeData(
