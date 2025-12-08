@@ -19,8 +19,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Rutas de archivos
-DATA_DIR = Path(__file__).parent.parent / "data"
+# Rutas de archivos (usando ruta absoluta para evitar problemas de directorio de trabajo)
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 PUMPS_DB_PATH = DATA_DIR / "pumps_db.json"
 CONTENT_MANIFEST_PATH = DATA_DIR / "content_manifest.json"
 
