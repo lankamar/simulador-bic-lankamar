@@ -56,3 +56,6 @@ Thumbs.db
 *.key
 secrets.json
 firebase_options.dart
+
+# Database files
+backend/auth.db
