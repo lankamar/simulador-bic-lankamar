@@ -1,0 +1,9 @@
+[global]
+title = "SiBIC - Simulador de BIC"
+description = "Panel administrativo SiBIC - Simulador de Bombas de Infusión Continua"
+
+theme.primaryColor = "#c62828"
+theme.backgroundColor = "#f4f4f4"
+theme.secondaryBackgroundColor = "#eceff1"
+theme.textColor = "#0d0d0d"
+theme.font = "sans serif"

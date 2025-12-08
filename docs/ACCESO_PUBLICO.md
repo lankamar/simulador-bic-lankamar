@@ -1,4 +1,4 @@
-# 🌐 ACCESO PÚBLICO - SIMULADOR BIC LANKAMAR
+# 🌐 ACCESO PÚBLICO - SiBIC - Simulador de Bombas de Infusión Continua
 
 ## URLs de Acceso
 
@@ -27,7 +27,12 @@ https://simulador-bic-lankamar-mhua3wowwbhztwwbbcdwyq.streamlit.app?mobile=true
 
 Ver sección "Invitaciones" en el dashboard para generar tokens.
 
+## Detección automática de dispositivos
+
+El dashboard detecta automáticamente el User-Agent del navegador y recarga con `?mobile=true` para mostrar la UI táctil en celulares. No hace falta que los usuarios modifiquen la URL; el script está integrado en la carga de la página.
+
 ## Nota técnica
 
-La detección mobile actualmente se fuerza añadiendo `?mobile=true` a la URL.
-En futuras iteraciones podemos detectar User-Agent desde un pequeño componente JS.
+La detección mobile se implementa con un script que revisa el User-Agent y recarga la URL con `?mobile=true` cuando reconoce un dispositivo táctil. De esta manera, los usuarios no necesitan cambiar manualmente la dirección.
+
+Ver `docs/DISTRIBUCION_PUBLICA.md` para conocer la forma planificada de compartir enlaces y tokens.

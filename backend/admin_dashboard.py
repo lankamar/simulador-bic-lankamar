@@ -1,5 +1,5 @@
 """
-Dashboard Admin - Simulador BIC Lankamar
+Dashboard Admin - SiBIC - Simulador de Bombas de Infusión Continua
 Panel web para gestión de Video-Bicicleta (contenido educativo)
 
 Ejecutar con: streamlit run admin_dashboard.py
@@ -25,7 +25,7 @@ import sqlite3
 
 # Configuración de página
 st.set_page_config(
-    page_title="Lankamar Admin",
+    page_title="SiBIC - Simulador de BIC",
     page_icon="💉",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -87,6 +87,28 @@ def get_all_errors(pumps):
     return errors
 
 
+def inject_mobile_detection_script():
+    """Inyecta JavaScript para detectar User-Agent móvil y forzar ?mobile=true."""
+    st.markdown(
+        """
+        <script>
+        (function() {
+            const mobileRegex = /Mobi|Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry/i;
+            const url = new URL(window.location);
+            if (url.searchParams.get("mobile") === "true") {
+                return;
+            }
+            if (mobileRegex.test(navigator.userAgent)) {
+                url.searchParams.set("mobile", "true");
+                window.location.replace(url.toString());
+            }
+        })();
+        </script>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def main():
     """Función principal del dashboard con autenticación SQLite"""
     
@@ -126,6 +148,11 @@ def main():
                     name=DEFAULT_CEO_NAME
                 )
     
+    params = st.experimental_get_query_params()
+    is_mobile = str(params.get("mobile", ["false"])[0]).lower() == "true"
+    if not is_mobile:
+        inject_mobile_detection_script()
+
     # Obtener autenticador desde SQLite
     authenticator, credentials = get_authenticator()
     
@@ -138,7 +165,7 @@ def main():
         display_name = get_user_display_name(username, credentials)
         
         # Header
-        st.title("💉 Lankamar Admin Dashboard")
+        st.title("💉 SiBIC - Simulador de Bombas de Infusión Continua")
 
         # Badge de rol con color
         role_colors = {
@@ -149,10 +176,6 @@ def main():
         }
         role_badge = role_colors.get(role, "⚪")
         st.markdown(f"**Bienvenido, {display_name}** | {role_badge} Rol: `{role.upper()}`")
-
-        # Detectar mobile via query param `?mobile=true`
-        params = st.experimental_get_query_params()
-        is_mobile = str(params.get("mobile", ["false"])[0]).lower() == "true"
 
         # Opciones de menú dinámico según rol
         opciones = get_menu_options(role)
@@ -197,7 +220,7 @@ def main():
 
             # Compartir link rápido en mobile (instrucción)
             st.markdown("---")
-            st.info("Compartí este enlace (mobile optimizado): agregá `?mobile=true` al final de la URL de la app")
+            st.info("La app detecta automáticamente tu dispositivo y adapta la experiencia móvil.")
 
         else:
             # Desktop: sidebar con logout y navegación
@@ -570,7 +593,7 @@ def render_export_section(pumps, all_errors):
         st.download_button(
             label="📥 Descargar Errores (CSV)",
             data=csv_errors,
-            file_name="lankamar_errores.csv",
+            file_name="sibic_errores.csv",
             mime="text/csv",
             use_container_width=True
         )
@@ -588,7 +611,7 @@ def render_export_section(pumps, all_errors):
         st.download_button(
             label="📥 Descargar Bombas (CSV)",
             data=csv_pumps,
-            file_name="lankamar_bombas.csv",
+            file_name="sibic_bombas.csv",
             mime="text/csv",
             use_container_width=True
         )

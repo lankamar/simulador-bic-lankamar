@@ -1,6 +1,6 @@
-# 💉 Simulador BIC Lankamar
+# 💉 SiBIC - Simulador de Bombas de Infusión Continua
 
-**App educativa móvil para simulación de bombas de infusión en enfermería argentina.**
+**App educativa móvil SiBIC para simulación de bombas de infusión en enfermería argentina.**
 
 > Reduciendo errores críticos en UCI mediante simulación digital.
 
@@ -58,6 +58,11 @@ flutter run
 - 📱 Mobile (optimizado): https://simulador-bic-lankamar-mhua3wowwbhztwwbbcdwyq.streamlit.app?mobile=true
 
 Recomendación: para usuarios en celular compartí el link con `?mobile=true`.
+
+## 📣 Distribución pública
+
+- La app detecta el dispositivo móvil y recarga automáticamente con la interfaz táctil; no se requiere que el usuario agregue parámetros.
+- Para guiar la distribución y uso de tokens revisá `docs/DISTRIBUCION_PUBLICA.md`.
 
 ## 📄 Licencia
 
