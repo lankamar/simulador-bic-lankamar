@@ -82,28 +82,46 @@ def get_all_errors(pumps):
 def main():
     """Función principal del dashboard con autenticación SQLite"""
     
-    # Verificar si la DB existe, si no, mostrar instrucciones
+    # Verificar e inicializar DB automáticamente si no existe
     if not DB_PATH.exists():
-        st.error("⚠️ Base de datos no inicializada")
-        st.markdown("""
-        ### Pasos para inicializar:
-        ```bash
+        st.warning("⚠️ Base de datos no encontrada. Inicializando...")
+        try:
+            from db import init_db
+            from migrate_from_yaml import migrate_users, load_yaml_config
+            
+            # Inicializar DB
+            init_db()
+            st.success("✅ Base de datos creada")
+            
+            # Intentar migración automática desde config.yaml si existe
+            config_path = Path(__file__).resolve().parent / "config.yaml"
+            if config_path.exists():
+                config = load_yaml_config(config_path)
+                stats = migrate_users(config)
+                st.success(f"✅ Migrados {stats['migrated']} usuarios")
+                st.info("🔄 Refrescando página...")
+                st.rerun()
+            
+        except Exception as e:
+            st.error(f"❌ Error inicializando: {e}")
+            st.code(f"""
+        Inicialización manual:
+        
         cd backend
-        python db.py                    # Crear base de datos
-        python migrate_from_yaml.py     # Migrar usuarios existentes
-        ```
+        python db.py
+        python migrate_from_yaml.py
+        streamlit run admin_dashboard.py
         """)
-        return
+            return
     
     # Obtener autenticador desde SQLite
     authenticator, credentials = get_authenticator()
     
     # Login
-    authenticator.login()
+    name, authentication_status, username = authenticator.login('Login', 'main')
     
-    if st.session_state.get("authentication_status"):
-        # Usuario logueado
-        username = st.session_state["username"]  # Es el email
+    if authentication_status:
+        # Usuario logueado correctamente
         role = get_user_role(username, credentials)
         display_name = get_user_display_name(username, credentials)
         
@@ -122,7 +140,7 @@ def main():
         
         # Sidebar con logout y navegación
         with st.sidebar:
-            authenticator.logout("🚪 Cerrar Sesión")
+            authenticator.logout("🚪 Cerrar Sesión", "main")
             st.markdown("---")
             
             # Info de sesión
@@ -162,7 +180,7 @@ def main():
         elif menu == "🎫 Invitaciones":
             render_invites_section()
     
-    elif st.session_state.get("authentication_status") is False:
+    elif authentication_status == False:
         st.error("❌ Usuario o contraseña incorrectos")
         st.info("💡 Si tenés un token de invitación, usalo abajo para registrarte")
         render_invite_redemption()
