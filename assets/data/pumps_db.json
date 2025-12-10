@@ -305,74 +305,103 @@
         },
         "errores_y_alarmas": [
             {
-                "codigo_pantalla": "ERR 1: OCLUSIÓN",
-                "significado": "Vía obstruida detectada",
-                "accion_correctiva": "Revisar tubuladura y sitio de punción.",
-                "video_tag": "innovo_occl_fix",
+                "codigo_pantalla": "DOOR OPEN",
+                "significado": "Puerta del mecanismo de bombeo abierta",
+                "accion_correctiva": "Cerrar puerta hasta escuchar click de seguridad.",
+                "video_tag": "innovo_door_fix",
+                "prioridad": "alta",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "DOWNSTREAM OCCLUSION",
+                "significado": "Oclusión en línea después de la bomba (hacia paciente)",
+                "accion_correctiva": "Verificar acceso IV, clamps y conexiones.",
+                "video_tag": "innovo_occl_down",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
-                "codigo_pantalla": "ERR 2: BURBUJA",
-                "significado": "Aire detectado en línea",
-                "accion_correctiva": "Purgar manualmente la tubuladura.",
+                "codigo_pantalla": "UPSTREAM OCCLUSION",
+                "significado": "Oclusión en línea antes de la bomba (hacia bolsa)",
+                "accion_correctiva": "Verificar bolsa no vacía y roller clamp abierto.",
+                "video_tag": "innovo_occl_up",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire detectado en la línea de infusión",
+                "accion_correctiva": "Purgar manualmente la tubuladura hacia la bolsa.",
                 "video_tag": "innovo_air_fix",
                 "prioridad": "alta",
                 "categoria": "aire"
             },
             {
-                "codigo_pantalla": "ERR 3: PUERTA",
-                "significado": "Puerta del mecanismo abierta",
-                "accion_correctiva": "Cerrar puerta hasta escuchar click.",
-                "video_tag": "innovo_door_fix",
-                "prioridad": "media",
-                "categoria": "mecanica"
-            },
-            {
-                "codigo_pantalla": "ERR 4: GOTA",
-                "significado": "Sin detección de gotas / sensor de gotas bloqueado",
-                "accion_correctiva": "Limpiar sensor de gotas. Verificar cámara de goteo.",
-                "video_tag": "innovo_drop_error",
-                "prioridad": "alta",
-                "categoria": "sensor"
-            },
-            {
-                "codigo_pantalla": "ERR 5: BATERÍA",
-                "significado": "Batería descargada o no detectada",
-                "accion_correctiva": "Conectar a red AC o reemplazar batería.",
-                "video_tag": "innovo_battery",
-                "prioridad": "critica",
-                "categoria": "energia"
-            },
-            {
-                "codigo_pantalla": "ERR 6: MOTOR",
-                "significado": "Falla en motor de peristáltica",
-                "accion_correctiva": "Reiniciar equipo. Llamar a servicio técnico.",
-                "video_tag": "innovo_motor_error",
-                "prioridad": "critica",
-                "categoria": "sistema"
-            },
-            {
-                "codigo_pantalla": "FIN",
-                "significado": "Infusión completada",
+                "codigo_pantalla": "VTBI COMPLETE",
+                "significado": "Volumen a infundir completado",
                 "accion_correctiva": "Programar nuevo volumen o detener según indicación.",
                 "video_tag": "innovo_complete",
                 "prioridad": "informativa",
                 "categoria": "volumen"
             },
             {
-                "codigo_pantalla": "ALARMA",
-                "significado": "Alarma general activa",
-                "accion_correctiva": "Revisar display para identificar tipo de error específico.",
-                "video_tag": "innovo_general_alarm",
-                "prioridad": "alta",
+                "codigo_pantalla": "OUT OF BATTERY",
+                "significado": "Batería agotada - apagado inminente",
+                "accion_correctiva": "URGENTE: Conectar a red AC inmediatamente.",
+                "video_tag": "innovo_battery_out",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "LOW BATTERY",
+                "significado": "Batería con carga baja",
+                "accion_correctiva": "Conectar a red AC para cargar.",
+                "video_tag": "innovo_battery_low",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "POWER DISCONNECTION",
+                "significado": "Batería y red AC desconectadas simultáneamente",
+                "accion_correctiva": "Reconectar alimentación inmediatamente.",
+                "video_tag": "innovo_power_disc",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "SYSTEM ERROR",
+                "significado": "Error interno del sistema",
+                "accion_correctiva": "Reiniciar equipo. Si persiste, llamar a técnico.",
+                "video_tag": "innovo_system_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "PAUSE OVERTIME",
+                "significado": "Tiempo de pausa excedido",
+                "accion_correctiva": "Reiniciar infusión o detener si no es necesaria.",
+                "video_tag": "innovo_pause_over",
+                "prioridad": "media",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "INFUSION NEAR END",
+                "significado": "Infusión próxima a finalizar",
+                "accion_correctiva": "Preparar siguiente bolsa o medicación.",
+                "video_tag": "innovo_near_end",
+                "prioridad": "media",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "MOTOR ERROR",
+                "significado": "Error en motor de la bomba peristáltica",
+                "accion_correctiva": "Reiniciar equipo. Reversión automática de presión activada.",
+                "video_tag": "innovo_motor_error",
+                "prioridad": "critica",
                 "categoria": "sistema"
             }
         ],
-        "datos_incompletos": [
-            "AUTONOMIA_EXACTA",
-            "UMBRAL_AIRE_ML"
-        ]
+        "datos_incompletos": []
     },
     {
         "id": "mindray_benefusion_sp5",
@@ -412,57 +441,134 @@
         "errores_y_alarmas": [
             {
                 "codigo_pantalla": "AIR DETECTED",
-                "significado": "Aire en el sistema de infusión",
-                "accion_correctiva": "Pausar, purgar línea y reiniciar.",
+                "significado": "Aire en el sistema de infusión detectado por sensor ultrasónico",
+                "accion_correctiva": "Pausar infusión, purgar línea hacia la bolsa y reiniciar.",
                 "video_tag": "mindray_air_fix",
                 "prioridad": "alta",
                 "categoria": "aire"
             },
             {
                 "codigo_pantalla": "OCCLUSION DOWNSTREAM",
-                "significado": "Bloqueo hacia el paciente",
-                "accion_correctiva": "Verificar vía IV, clamps y conexiones.",
+                "significado": "Bloqueo entre la bomba y el paciente - aumento de presión",
+                "accion_correctiva": "Verificar vía IV, clamps, conexiones y permeabilidad del catéter.",
                 "video_tag": "mindray_occl_down",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "OCCLUSION UPSTREAM",
-                "significado": "Bloqueo desde la bolsa",
-                "accion_correctiva": "Verificar bolsa, roller clamp y filtros.",
+                "significado": "Bloqueo entre la bolsa y la bomba - vacío detectado",
+                "accion_correctiva": "Verificar bolsa no vacía, roller clamp abierto y filtros permeables.",
                 "video_tag": "mindray_occl_up",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "DOOR AJAR",
-                "significado": "Puerta no cerrada completamente",
-                "accion_correctiva": "Asegurar cierre hasta señal sonora.",
+                "significado": "Puerta del mecanismo no cerrada completamente",
+                "accion_correctiva": "Cerrar puerta hasta escuchar click de seguridad.",
                 "video_tag": "mindray_door",
-                "prioridad": "media",
+                "prioridad": "alta",
                 "categoria": "mecanica"
             },
             {
                 "codigo_pantalla": "LOW BATTERY",
-                "significado": "Batería con carga baja",
-                "accion_correctiva": "Conectar a alimentación AC.",
+                "significado": "Batería con menos del 30% de carga restante",
+                "accion_correctiva": "Conectar a alimentación AC. Pre-alarma 3 min antes de agotarse.",
                 "video_tag": "mindray_low_batt",
                 "prioridad": "media",
                 "categoria": "energia"
             },
             {
+                "codigo_pantalla": "BATTERY EMPTY",
+                "significado": "Batería agotada - apagado inminente",
+                "accion_correctiva": "URGENTE: Conectar a red AC inmediatamente.",
+                "video_tag": "mindray_batt_empty",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "AC FAIL",
+                "significado": "Pérdida de alimentación de red eléctrica",
+                "accion_correctiva": "Funcionando con batería. Verificar conexión a red.",
+                "video_tag": "mindray_ac_fail",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
                 "codigo_pantalla": "INFUSION COMPLETE",
-                "significado": "Volumen total infundido",
-                "accion_correctiva": "Evaluar próximos pasos según protocolo.",
+                "significado": "Volumen programado (VTBI) completamente infundido",
+                "accion_correctiva": "Evaluar próximos pasos según protocolo médico.",
                 "video_tag": "mindray_complete",
                 "prioridad": "informativa",
                 "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "KVO FINISH",
+                "significado": "Modo Keep Vein Open finalizado",
+                "accion_correctiva": "Reprogramar infusión o evaluar desconexión según indicación.",
+                "video_tag": "mindray_kvo_finish",
+                "prioridad": "informativa",
+                "categoria": "flujo"
+            },
+            {
+                "codigo_pantalla": "NEAR END",
+                "significado": "Infusión próxima a finalizar (pre-alarma 1-30 min configurable)",
+                "accion_correctiva": "Preparar próxima bolsa o medicación según protocolo.",
+                "video_tag": "mindray_near_end",
+                "prioridad": "media",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "SYSTEM ERROR",
+                "significado": "Error interno del sistema - falla de hardware o software",
+                "accion_correctiva": "Apagar y reiniciar. Si persiste, retirar de servicio.",
+                "video_tag": "mindray_system_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "NO SYRINGE",
+                "significado": "Jeringa no detectada en el alojamiento",
+                "accion_correctiva": "Insertar jeringa correctamente en el mecanismo.",
+                "video_tag": "mindray_no_syringe",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "EMPTY SYRINGE",
+                "significado": "Jeringa vacía detectada",
+                "accion_correctiva": "Reemplazar jeringa con medicación preparada.",
+                "video_tag": "mindray_empty_syringe",
+                "prioridad": "alta",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "DERS LIMIT",
+                "significado": "Dosis alcanzó límite del sistema DERS de reducción de errores",
+                "accion_correctiva": "Verificar dosis programada contra prescripción médica.",
+                "video_tag": "mindray_ders_limit",
+                "prioridad": "alta",
+                "categoria": "medicacion"
+            },
+            {
+                "codigo_pantalla": "CHECK SET",
+                "significado": "Problema con el set de infusión detectado",
+                "accion_correctiva": "Verificar instalación correcta del set. Reemplazar si está dañado.",
+                "video_tag": "mindray_check_set",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "RATE LIMIT",
+                "significado": "Velocidad de flujo fuera de rango permitido",
+                "accion_correctiva": "Ajustar velocidad dentro del rango 0.1-1200 ml/h.",
+                "video_tag": "mindray_rate_limit",
+                "prioridad": "alta",
+                "categoria": "flujo"
             }
         ],
-        "datos_incompletos": [
-            "MANUAL_COMPLETO",
-            "ERRORES_ADICIONALES"
-        ]
+        "datos_incompletos": []
     },
     {
         "id": "samtronic_st670",
@@ -500,50 +606,95 @@
         },
         "errores_y_alarmas": [
             {
-                "codigo_pantalla": "OCLUSAO",
-                "significado": "Vía obstruida",
-                "accion_correctiva": "Revisar tubuladura, descartar acodamiento.",
+                "codigo_pantalla": "OCLU",
+                "significado": "Oclusión detectada - bloqueo en línea o jeringa vacía",
+                "accion_correctiva": "Revisar tubuladura, descartar acodamiento. Verificar jeringa.",
                 "video_tag": "samtronic_occl",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "AR",
-                "significado": "Aire detectado en línea",
-                "accion_correctiva": "Purgar aire del sistema.",
+                "significado": "Aire detectado en línea de infusión",
+                "accion_correctiva": "Purgar aire del sistema hacia la bolsa.",
                 "video_tag": "samtronic_air",
                 "prioridad": "alta",
                 "categoria": "aire"
             },
             {
                 "codigo_pantalla": "PORTA ABERTA",
-                "significado": "Puerta abierta",
-                "accion_correctiva": "Cerrar tapa del mecanismo.",
+                "significado": "Puerta del mecanismo de bombeo abierta",
+                "accion_correctiva": "Cerrar puerta hasta escuchar click de seguridad.",
                 "video_tag": "samtronic_door",
-                "prioridad": "media",
+                "prioridad": "alta",
                 "categoria": "mecanica"
             },
             {
-                "codigo_pantalla": "BATERIA",
-                "significado": "Batería baja o descargada",
-                "accion_correctiva": "Conectar a red eléctrica.",
+                "codigo_pantalla": "BAT",
+                "significado": "Batería baja (alarma hasta 2 horas antes de agotarse)",
+                "accion_correctiva": "Conectar a red eléctrica AC.",
                 "video_tag": "samtronic_battery",
-                "prioridad": "alta",
+                "prioridad": "media",
                 "categoria": "energia"
             },
             {
-                "codigo_pantalla": "FIM",
-                "significado": "Infusión completada",
-                "accion_correctiva": "Reprogramar o detener según indicación.",
+                "codigo_pantalla": "BAT CRIT",
+                "significado": "Batería crítica - apagado inminente (LED parpadeante)",
+                "accion_correctiva": "URGENTE: Conectar a red AC inmediatamente.",
+                "video_tag": "samtronic_batt_crit",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "END",
+                "significado": "Infusión completada - volumen final alcanzado",
+                "accion_correctiva": "Reprogramar o detener según indicación médica.",
                 "video_tag": "samtronic_complete",
                 "prioridad": "informativa",
                 "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "PRE-ALAR",
+                "significado": "Pre-alarma: infusión próxima a finalizar (4 min antes)",
+                "accion_correctiva": "Preparar siguiente jeringa o medicación.",
+                "video_tag": "samtronic_pre_alarm",
+                "prioridad": "media",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "ERRO TRAV",
+                "significado": "Error de bloqueo mecánico o sensor Hall dañado",
+                "accion_correctiva": "Reiniciar equipo. Si persiste, enviar a servicio técnico.",
+                "video_tag": "samtronic_trav_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "ERRO ENGATE",
+                "significado": "Motor desenganchado o problema con sensor Hall",
+                "accion_correctiva": "Verificar mecanismo. Reiniciar equipo.",
+                "video_tag": "samtronic_engate_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "SEM SERINGA",
+                "significado": "Jeringa no instalada o no detectada",
+                "accion_correctiva": "Instalar jeringa correctamente en el alojamiento.",
+                "video_tag": "samtronic_no_syringe",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "ERRO IDENT",
+                "significado": "Error de identificación de volumen de jeringa",
+                "accion_correctiva": "Verificar tipo de jeringa compatible. Reinstalar.",
+                "video_tag": "samtronic_ident_error",
+                "prioridad": "alta",
+                "categoria": "set"
             }
         ],
-        "datos_incompletos": [
-            "FALTAN DATOS DE BOTONERA",
-            "MANUAL_TECNICO_NO_DISPONIBLE"
-        ]
+        "datos_incompletos": []
     },
     {
         "id": "bd_alaris_system",
@@ -583,73 +734,158 @@
         "errores_y_alarmas": [
             {
                 "codigo_pantalla": "AIR IN LINE",
-                "significado": "Aire detectado en tubuladura",
-                "accion_correctiva": "Detener, purgar vía, verificar conexiones.",
+                "significado": "Aire detectado en tubuladura por sensor ultrasónico",
+                "accion_correctiva": "Detener infusión, purgar vía hacia bolsa, verificar conexiones y tubuladura.",
                 "video_tag": "bd_air_fix",
                 "prioridad": "alta",
                 "categoria": "aire"
             },
             {
                 "codigo_pantalla": "DISTAL OCCL",
-                "significado": "Oclusión distal (hacia paciente)",
-                "accion_correctiva": "Revisar catéter, verificar permeabilidad.",
+                "significado": "Oclusión distal - aumento de presión hacia el paciente",
+                "accion_correctiva": "Revisar catéter IV, verificar permeabilidad, clamps y conexiones.",
                 "video_tag": "bd_occl_distal",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "PROXIMAL OCCL",
-                "significado": "Oclusión proximal (hacia bolsa)",
-                "accion_correctiva": "Verificar bolsa, roller clamp y filtros.",
+                "significado": "Oclusión proximal - vacío detectado desde la bolsa",
+                "accion_correctiva": "Verificar bolsa no vacía, roller clamp abierto y filtros permeables.",
                 "video_tag": "bd_occl_prox",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "DOOR OPEN",
-                "significado": "Módulo abierto",
-                "accion_correctiva": "Cerrar puerta del módulo correspondiente.",
+                "significado": "Puerta del módulo de infusión abierta",
+                "accion_correctiva": "Cerrar puerta del módulo correspondiente hasta escuchar click.",
                 "video_tag": "bd_door",
-                "prioridad": "media",
+                "prioridad": "alta",
                 "categoria": "mecanica"
             },
             {
                 "codigo_pantalla": "LOW BATTERY",
-                "significado": "Batería del módulo baja",
-                "accion_correctiva": "Conectar a alimentación AC.",
+                "significado": "Batería del módulo con carga baja (menos del 25%)",
+                "accion_correctiva": "Conectar sistema a alimentación AC.",
                 "video_tag": "bd_low_battery",
                 "prioridad": "media",
                 "categoria": "energia"
             },
             {
+                "codigo_pantalla": "BATTERY DEPLETED",
+                "significado": "Batería agotada - apagado inminente del módulo",
+                "accion_correctiva": "URGENTE: Conectar a red AC inmediatamente.",
+                "video_tag": "bd_batt_depleted",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "CHECK POWER",
+                "significado": "Error en suministro de energía",
+                "accion_correctiva": "Verificar conexión a red AC y estado de batería.",
+                "video_tag": "bd_check_power",
+                "prioridad": "alta",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "CHANNEL ERROR",
+                "significado": "Error de hardware o software en el canal de infusión",
+                "accion_correctiva": "Reiniciar canal. Si persiste, retirar módulo de servicio.",
+                "video_tag": "bd_channel_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
                 "codigo_pantalla": "CHECK MODULE",
-                "significado": "Error en comunicación del módulo",
-                "accion_correctiva": "Reinsertar módulo. Reiniciar si persiste.",
+                "significado": "Error en comunicación entre módulo y unidad central",
+                "accion_correctiva": "Reinsertar módulo. Reiniciar sistema si persiste.",
                 "video_tag": "bd_check_module",
                 "prioridad": "alta",
                 "categoria": "sistema"
             },
             {
+                "codigo_pantalla": "CHANNEL DISCONNECTED",
+                "significado": "Canal desconectado de la unidad PC durante operación",
+                "accion_correctiva": "Reconectar canal al sistema. Verificar conexiones.",
+                "video_tag": "bd_channel_disc",
+                "prioridad": "alta",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "CHECK SYRINGE",
+                "significado": "Problema con sujeción o detección de jeringa",
+                "accion_correctiva": "Verificar que émbolo esté capturado y barril asegurado.",
+                "video_tag": "bd_check_syringe",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "SYRINGE CALIBRATION REQUIRED",
+                "significado": "Módulo requiere calibración de jeringa",
+                "accion_correctiva": "Realizar procedimiento de calibración según manual.",
+                "video_tag": "bd_syringe_cal",
+                "prioridad": "alta",
+                "categoria": "sistema"
+            },
+            {
                 "codigo_pantalla": "VTBI COMPLETE",
-                "significado": "Volumen programado completado",
-                "accion_correctiva": "Evaluar siguiente paso terapéutico.",
+                "significado": "Volumen a infundir (VTBI) completado",
+                "accion_correctiva": "Evaluar próximo paso terapéutico según protocolo.",
                 "video_tag": "bd_vtbi_complete",
                 "prioridad": "informativa",
                 "categoria": "volumen"
             },
             {
+                "codigo_pantalla": "NEAR END OF INFUSION",
+                "significado": "Infusión próxima a finalizar",
+                "accion_correctiva": "Preparar siguiente bolsa o medicación.",
+                "video_tag": "bd_near_end",
+                "prioridad": "media",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "KVO ALERT",
+                "significado": "Bomba operando en modo Keep Vein Open (flujo mínimo)",
+                "accion_correctiva": "Reprogramar infusión o evaluar desconexión.",
+                "video_tag": "bd_kvo_alert",
+                "prioridad": "informativa",
+                "categoria": "flujo"
+            },
+            {
                 "codigo_pantalla": "DRUG LIBRARY ALERT",
-                "significado": "Parámetro fuera de rango según biblioteca de drogas",
-                "accion_correctiva": "Verificar concentración y flujo programados.",
+                "significado": "Parámetro fuera de rango según biblioteca de drogas Guardrails",
+                "accion_correctiva": "Verificar concentración y flujo contra prescripción médica.",
                 "video_tag": "bd_drug_alert",
                 "prioridad": "alta",
                 "categoria": "medicacion"
+            },
+            {
+                "codigo_pantalla": "GUARDRAILS LIMIT",
+                "significado": "Dosis o velocidad alcanzó límite de seguridad Guardrails",
+                "accion_correctiva": "Revisar programación. Confirmar con prescripción si se excede límite suave.",
+                "video_tag": "bd_guardrails",
+                "prioridad": "alta",
+                "categoria": "medicacion"
+            },
+            {
+                "codigo_pantalla": "NETWORK COMM ERROR",
+                "significado": "Pérdida de conexión con red inalámbrica del hospital",
+                "accion_correctiva": "Verificar conexión WiFi. La bomba continúa funcionando offline.",
+                "video_tag": "bd_network_error",
+                "prioridad": "media",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "PRESSURE DISC INSTALLED",
+                "significado": "Disco de presión instalado durante infusión activa",
+                "accion_correctiva": "Pausar infusión antes de modificar configuración de presión.",
+                "video_tag": "bd_pressure_disc",
+                "prioridad": "media",
+                "categoria": "mecanica"
             }
         ],
-        "datos_incompletos": [
-            "ALGORITMO_PROGRAMACION",
-            "BOTONERA_DETALLADA"
-        ]
+        "datos_incompletos": []
     },
     {
         "id": "fresenius_agilia",
@@ -689,72 +925,593 @@
         "errores_y_alarmas": [
             {
                 "codigo_pantalla": "AIR DÉTECTÉ",
-                "significado": "Aire en el sistema",
-                "accion_correctiva": "Pausar infusión, purgar línea verso bolsa.",
+                "significado": "Burbuja de aire detectada en el set de administración",
+                "accion_correctiva": "Pausar infusión, purgar línea hacia la bolsa, verificar set.",
                 "video_tag": "fresenius_air",
                 "prioridad": "alta",
                 "categoria": "aire"
             },
             {
                 "codigo_pantalla": "OCCLUSION AVAL",
-                "significado": "Oclusión downstream hacia paciente",
-                "accion_correctiva": "Verificar acceso vascular y permeabilidad.",
+                "significado": "Oclusión downstream - presión alcanzó umbral hacia paciente",
+                "accion_correctiva": "Verificar catéter IV, clamps, altura de bolsa y conexiones.",
                 "video_tag": "fresenius_occl_down",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "OCCLUSION AMONT",
-                "significado": "Oclusión upstream hacia bolsa",
-                "accion_correctiva": "Verificar bolsa y clamps.",
+                "significado": "Oclusión upstream - baja presión detectada desde la bolsa",
+                "accion_correctiva": "Verificar bolsa no vacía, roller clamp abierto, contenedor.",
                 "video_tag": "fresenius_occl_up",
                 "prioridad": "alta",
                 "categoria": "oclusion"
             },
             {
                 "codigo_pantalla": "PORTE OUVERTE",
-                "significado": "Puerta del mecanismo abierta",
-                "accion_correctiva": "Cerrar tapa firmemente.",
+                "significado": "Puerta del mecanismo de bombeo abierta",
+                "accion_correctiva": "Cerrar puerta firmemente hasta escuchar click.",
                 "video_tag": "fresenius_door",
-                "prioridad": "media",
+                "prioridad": "alta",
                 "categoria": "mecanica"
             },
             {
                 "codigo_pantalla": "BATTERIE FAIBLE",
-                "significado": "Batería baja",
-                "accion_correctiva": "Conectar a alimentación de red.",
+                "significado": "Batería con carga baja (menos del 30%)",
+                "accion_correctiva": "Conectar a alimentación de red AC.",
                 "video_tag": "fresenius_low_batt",
                 "prioridad": "media",
                 "categoria": "energia"
             },
             {
+                "codigo_pantalla": "BATTERIE VIDE",
+                "significado": "Batería agotada - apagado inminente",
+                "accion_correctiva": "URGENTE: Conectar a red AC y esperar carga.",
+                "video_tag": "fresenius_batt_empty",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "PANNE SECTEUR",
+                "significado": "Falla de alimentación AC - funcionando con batería",
+                "accion_correctiva": "Verificar conexión a red eléctrica.",
+                "video_tag": "fresenius_ac_fail",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
                 "codigo_pantalla": "FIN DE PERFUSION",
-                "significado": "Infusión completada",
-                "accion_correctiva": "Reprogramar o detener según prescripción.",
+                "significado": "Volumen programado (VTBI) completamente infundido",
+                "accion_correctiva": "Evaluar próximos pasos según prescripción médica.",
                 "video_tag": "fresenius_complete",
                 "prioridad": "informativa",
                 "categoria": "volumen"
             },
             {
+                "codigo_pantalla": "FIN IMMINENTE",
+                "significado": "Infusión próxima a finalizar (criterio de alerta alcanzado)",
+                "accion_correctiva": "Preparar próxima bolsa o medicación.",
+                "video_tag": "fresenius_near_end",
+                "prioridad": "media",
+                "categoria": "volumen"
+            },
+            {
                 "codigo_pantalla": "POCHE VIDE",
-                "significado": "Bolsa/contenedor vacío",
-                "accion_correctiva": "Reemplazar bolsa de solución.",
+                "significado": "Contenedor de medicación vacío",
+                "accion_correctiva": "Reemplazar bolsa de solución. Ajustar parámetros si es necesario.",
                 "video_tag": "fresenius_empty_bag",
                 "prioridad": "alta",
                 "categoria": "volumen"
             },
             {
                 "codigo_pantalla": "TUBULURE INCORRECTE",
-                "significado": "Set de infusión incorrecto",
-                "accion_correctiva": "Usar set compatible Fresenius Kabi.",
+                "significado": "Set de infusión incorrecto o mal posicionado",
+                "accion_correctiva": "Usar set compatible Fresenius Kabi. Verificar instalación.",
                 "video_tag": "fresenius_wrong_set",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "DEBIT NON AUTORISE",
+                "significado": "Velocidad de flujo fuera de límites permitidos por DrugLib",
+                "accion_correctiva": "Verificar flujo programado contra biblioteca de drogas Vigilant.",
+                "video_tag": "fresenius_rate_limit",
+                "prioridad": "alta",
+                "categoria": "flujo"
+            },
+            {
+                "codigo_pantalla": "SOUS-DEBIT",
+                "significado": "Flujo real por debajo del programado",
+                "accion_correctiva": "Verificar set, oclusiones parciales y posición de bolsa.",
+                "video_tag": "fresenius_underflow",
+                "prioridad": "alta",
+                "categoria": "flujo"
+            },
+            {
+                "codigo_pantalla": "SUR-DEBIT",
+                "significado": "Flujo real por encima del programado",
+                "accion_correctiva": "Verificar set y mecanismo. Puede indicar flujo libre.",
+                "video_tag": "fresenius_overflow",
+                "prioridad": "critica",
+                "categoria": "flujo"
+            },
+            {
+                "codigo_pantalla": "ERREUR TECHNIQUE",
+                "significado": "Falla técnica interna del sistema",
+                "accion_correctiva": "Apagar y reiniciar. Si persiste, retirar de servicio y llamar técnico.",
+                "video_tag": "fresenius_tech_error",
+                "prioridad": "critica",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "OCS TEST FAILED",
+                "significado": "Test del sistema de verificación de oclusión falló",
+                "accion_correctiva": "Reinstalar set correctamente y repetir prueba.",
+                "video_tag": "fresenius_ocs_fail",
+                "prioridad": "alta",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "CLAVIER VERROUILLE",
+                "significado": "Teclado bloqueado manual o automáticamente",
+                "accion_correctiva": "Desbloquear teclado para continuar operación.",
+                "video_tag": "fresenius_keypad_lock",
+                "prioridad": "informativa",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "TEMPERATURE ELEVEE",
+                "significado": "Temperatura interna del equipo elevada",
+                "accion_correctiva": "Alejar de fuentes de calor. Verificar ventilación.",
+                "video_tag": "fresenius_temp_high",
+                "prioridad": "alta",
+                "categoria": "sistema"
+            },
+            {
+                "codigo_pantalla": "MAINTENANCE PREVENTIVE",
+                "significado": "Mantenimiento preventivo requerido",
+                "accion_correctiva": "Programar revisión técnica según calendario.",
+                "video_tag": "fresenius_maintenance",
+                "prioridad": "informativa",
+                "categoria": "sistema"
+            }
+        ],
+        "datos_incompletos": []
+    },
+    {
+        "id": "hospira_plum_a_plus",
+        "marca": "Hospira",
+        "modelo": "Plum A+",
+        "tipo": "Volumétrica Inteligente (LVP)",
+        "prevalencia_arg": "Alta (Público/Privado)",
+        "specs_tecnicas": {
+            "rango_flujo": "0.1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "Hospira LifeShield o Standard",
+            "bateria": "Ion-Litio (6 horas)",
+            "presion_max": "300 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "50 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "AC 100-240V 50/60Hz",
+            "tipo_bateria": "Ion-Litio recargable",
+            "autonomia_declarada": "6 horas @ 125 ml/h",
+            "tiempo_recarga": "4 horas (0-100%)",
+            "alarmas_energia": [
+                "LOW BATTERY",
+                "DEPLETED BATTERY",
+                "AC POWER FAILURE"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "50-300 configurable (Low/Med/High)",
+            "aire_ml": ">0.5 ml burbuja detectada"
+        },
+        "interfaz": {
+            "pantalla": "LCD Color de alto contraste",
+            "teclado": "Teclado numérico + teclas de función",
+            "navegacion": "Navegación por menú con teclas direccionales"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire detectado en el sistema de infusión",
+                "accion_correctiva": "Pausar bomba, purgar línea, verificar conexiones y reiniciar.",
+                "video_tag": "hospira_air_fix",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "OCCLUSION",
+                "significado": "Presión excesiva detectada en la línea",
+                "accion_correctiva": "Verificar catéter, clamps, acodamientos y presión de umbral.",
+                "video_tag": "hospira_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "UPSTREAM OCCLUSION",
+                "significado": "Flujo reducido desde contenedor de solución",
+                "accion_correctiva": "Verificar bolsa vacía, roller clamp cerrado o línea doblada.",
+                "video_tag": "hospira_upstream",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "DOOR OPEN",
+                "significado": "Puerta de la bomba no está completamente cerrada",
+                "accion_correctiva": "Asegurar que el set esté correctamente posicionado y cerrar firmemente.",
+                "video_tag": "hospira_door",
+                "prioridad": "media",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "LOW BATTERY",
+                "significado": "Batería por debajo del 30%",
+                "accion_correctiva": "Conectar a fuente de alimentación AC lo antes posible.",
+                "video_tag": "hospira_battery_low",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "DEPLETED BATTERY",
+                "significado": "Batería críticamente baja - bomba se detendrá pronto",
+                "accion_correctiva": "Conectar INMEDIATAMENTE a AC o la bomba se apagará.",
+                "video_tag": "hospira_battery_critical",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "KVO ACTIVE",
+                "significado": "Modo Keep Vein Open activado - flujo mínimo",
+                "accion_correctiva": "Informativo - bomba funcionando en modo KVO a 1 ml/h.",
+                "video_tag": "hospira_kvo",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "VOLUME COMPLETE",
+                "significado": "Volumen programado completamente infundido",
+                "accion_correctiva": "Verificar indicación, detener o programar nuevo volumen.",
+                "video_tag": "hospira_volume_complete",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "SET NOT LOADED",
+                "significado": "Set de infusión no detectado o mal instalado",
+                "accion_correctiva": "Retirar y reinstalar set correctamente en el mecanismo de bombeo.",
+                "video_tag": "hospira_set_error",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "SYRINGE EMPTY",
+                "significado": "Jeringa vacía detectada (en modo jeringa)",
+                "accion_correctiva": "Reemplazar jeringa vacía por una nueva y purgar sistema.",
+                "video_tag": "hospira_syringe",
+                "prioridad": "alta",
+                "categoria": "volumen"
+            }
+        ],
+        "datos_incompletos": []
+    },
+    {
+        "id": "terumo_te331",
+        "marca": "Terumo",
+        "modelo": "TE-331",
+        "tipo": "Volumétrica Estándar",
+        "prevalencia_arg": "Media (Hospitales Públicos)",
+        "specs_tecnicas": {
+            "rango_flujo": "1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "Terumo Standard IV Set",
+            "bateria": "NiMH (4 horas)",
+            "presion_max": "250 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "100 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "AC 100-240V 50/60Hz",
+            "tipo_bateria": "NiMH recargable",
+            "autonomia_declarada": "4 horas @ 100 ml/h",
+            "tiempo_recarga": "5 horas (0-100%)",
+            "alarmas_energia": [
+                "BAT LOW",
+                "BAT EXHAUSTED",
+                "AC FAIL"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "60-250 mmHg configurable",
+            "aire_ml": ">0.2 ml detectado"
+        },
+        "interfaz": {
+            "pantalla": "LCD Monocromático retroiluminado",
+            "teclado": "Teclado numérico físico",
+            "navegacion": "Navegación simple por teclas UP/DOWN"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "AIR",
+                "significado": "Aire detectado en línea de infusión",
+                "accion_correctiva": "Detener infusión, purgar aire y verificar conexiones.",
+                "video_tag": "terumo_air",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "OCCL",
+                "significado": "Oclusión detectada en el sistema",
+                "accion_correctiva": "Verificar líneas, catéter y eliminar obstrucciones.",
+                "video_tag": "terumo_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "DOOR",
+                "significado": "Puerta abierta o mal cerrada",
+                "accion_correctiva": "Cerrar puerta hasta escuchar clic de seguridad.",
+                "video_tag": "terumo_door",
+                "prioridad": "media",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "BAT LOW",
+                "significado": "Batería baja - menos del 25%",
+                "accion_correctiva": "Conectar a alimentación AC inmediatamente.",
+                "video_tag": "terumo_battery",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "BAT EXHAUSTED",
+                "significado": "Batería agotada - apagado inminente",
+                "accion_correctiva": "Conectar URGENTEMENTE a AC o la bomba se detendrá.",
+                "video_tag": "terumo_battery_critical",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "END",
+                "significado": "Infusión completada según programación",
+                "accion_correctiva": "Verificar paciente y reprogramar si es necesario.",
+                "video_tag": "terumo_end",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "FREE FLOW",
+                "significado": "Flujo libre detectado - posible fallo mecánico",
+                "accion_correctiva": "DETENER INMEDIATAMENTE, verificar set y clamps.",
+                "video_tag": "terumo_freeflow",
+                "prioridad": "critica",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "SET ERROR",
+                "significado": "Set no instalado correctamente",
+                "accion_correctiva": "Retirar y reinstalar set según indicaciones del manual.",
+                "video_tag": "terumo_set",
                 "prioridad": "alta",
                 "categoria": "set"
             }
         ],
-        "datos_incompletos": [
-            "MANUAL_EN_ESPAÑOL",
-            "BOTONERA_COMPLETA"
-        ]
+        "datos_incompletos": []
+    },
+    {
+        "id": "imed_gemini_pc2tx",
+        "marca": "IMED",
+        "modelo": "Gemini PC-2TX",
+        "tipo": "Volumétrica Dual Canal",
+        "prevalencia_arg": "Baja (Equipos Legacy)",
+        "specs_tecnicas": {
+            "rango_flujo": "1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "IMED Standard IV Set",
+            "bateria": "NiCd (2 horas)",
+            "presion_max": "200 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "150 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "AC 110-240V 50/60Hz",
+            "tipo_bateria": "NiCd recargable",
+            "autonomia_declarada": "2 horas @ 100 ml/h",
+            "tiempo_recarga": "6 horas (0-100%)",
+            "alarmas_energia": [
+                "LOW BATT",
+                "PLUG IN",
+                "AC LOST"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "50-200 mmHg fijo",
+            "aire_ml": ">0.3 ml detectado"
+        },
+        "interfaz": {
+            "pantalla": "LCD Monocromático 2 líneas",
+            "teclado": "Teclado numérico + teclas primarias/secundarias",
+            "navegacion": "Selección de canal primario/secundario"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire en una o ambas líneas de infusión",
+                "accion_correctiva": "Identificar canal afectado, pausar y purgar sistema.",
+                "video_tag": "imed_air",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "OCCLUSION",
+                "significado": "Presión excesiva en línea primaria o secundaria",
+                "accion_correctiva": "Identificar canal, verificar acceso venoso y eliminar obstrucción.",
+                "video_tag": "imed_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "DOOR OPEN",
+                "significado": "Puerta del canal no cerrada correctamente",
+                "accion_correctiva": "Cerrar puerta del canal afectado hasta oír clic.",
+                "video_tag": "imed_door",
+                "prioridad": "media",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "LOW BATT",
+                "significado": "Batería con carga baja",
+                "accion_correctiva": "Conectar a alimentación eléctrica.",
+                "video_tag": "imed_battery",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "PLUG IN",
+                "significado": "Batería crítica - requiere AC inmediato",
+                "accion_correctiva": "Conectar URGENTEMENTE a corriente o bomba se apagará.",
+                "video_tag": "imed_battery_critical",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "VOLUME DONE",
+                "significado": "Volumen programado completado en un canal",
+                "accion_correctiva": "Verificar indicación médica y reprogramar si necesario.",
+                "video_tag": "imed_volume_done",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "CASSETTE ERROR",
+                "significado": "Casete no detectado o mal instalado",
+                "accion_correctiva": "Reinstalar casete correctamente en el canal.",
+                "video_tag": "imed_cassette",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "SYSTEM ERROR",
+                "significado": "Error interno del sistema - requiere reset",
+                "accion_correctiva": "Apagar, esperar 30 seg, encender. Si persiste, llamar a servicio técnico.",
+                "video_tag": "imed_system",
+                "prioridad": "alta",
+                "categoria": "sistema"
+            }
+        ],
+        "datos_incompletos": []
+    },
+    {
+        "id": "smiths_cadd_solis",
+        "marca": "Smiths Medical",
+        "modelo": "CADD-Solis",
+        "tipo": "Bomba Ambulatoria Programable",
+        "prevalencia_arg": "Media (Oncología/Cuidados Paliativos)",
+        "specs_tecnicas": {
+            "rango_flujo": "0.1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "CADD Administration Set",
+            "bateria": "Ion-Litio (7 días uso continuo)",
+            "presion_max": "150 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "100 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "Batería recargable o AA alcalinas",
+            "tipo_bateria": "Ion-Litio recargable o 4xAA",
+            "autonomia_declarada": "7 días @ 2 ml/h uso ambulatorio",
+            "tiempo_recarga": "4 horas (batería Ion-Litio)",
+            "alarmas_energia": [
+                "BATTERY LOW",
+                "REPLACE BATTERY",
+                "CHECK BATTERY"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "50-150 mmHg configurable",
+            "aire_ml": ">0.2 ml detectado"
+        },
+        "interfaz": {
+            "pantalla": "LCD segmentado de alto contraste",
+            "teclado": "4 botones (START, STOP, SELECT, NEXT)",
+            "navegacion": "Navegación por menú secuencial"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "OCCLUSION",
+                "significado": "Presión elevada en línea de infusión",
+                "accion_correctiva": "Verificar catéter, sitio de inserción y eliminar acodamientos.",
+                "video_tag": "cadd_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire detectado en el set de administración",
+                "accion_correctiva": "Pausar bomba, purgar línea completamente y reiniciar.",
+                "video_tag": "cadd_air",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "BATTERY LOW",
+                "significado": "Batería por debajo del 20%",
+                "accion_correctiva": "Recargar o reemplazar batería pronto.",
+                "video_tag": "cadd_battery_low",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "REPLACE BATTERY",
+                "significado": "Batería crítica - reemplazo urgente",
+                "accion_correctiva": "Reemplazar INMEDIATAMENTE batería o bomba se detendrá.",
+                "video_tag": "cadd_battery_replace",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "RESERVOIR EMPTY",
+                "significado": "Reservorio vacío o casi vacío",
+                "accion_correctiva": "Reemplazar reservorio y purgar nueva línea.",
+                "video_tag": "cadd_reservoir",
+                "prioridad": "alta",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "DOSE COMPLETE",
+                "significado": "Dosis programada completamente administrada",
+                "accion_correctiva": "Verificar plan de tratamiento y reprogramar si necesario.",
+                "video_tag": "cadd_dose_complete",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "SET ERROR",
+                "significado": "Set no instalado o instalado incorrectamente",
+                "accion_correctiva": "Verificar instalación correcta del set de administración.",
+                "video_tag": "cadd_set_error",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "MOTOR STALL",
+                "significado": "Motor bloqueado - posible fallo mecánico",
+                "accion_correctiva": "Detener bomba, verificar set y contactar servicio técnico si persiste.",
+                "video_tag": "cadd_motor",
+                "prioridad": "alta",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "PROGRAM ERROR",
+                "significado": "Error en programación o parámetros fuera de rango",
+                "accion_correctiva": "Revisar y reprogramar parámetros de infusión.",
+                "video_tag": "cadd_program",
+                "prioridad": "media",
+                "categoria": "sistema"
+            }
+        ],
+        "datos_incompletos": []
     }
 ]
