@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Cleaner Pro</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">📧</span>
+                <h1>Email Cleaner Pro</h1>
+            </div>
+            <div class="provider-badge" id="providerBadge">
+                <span class="provider-icon">⏳</span>
+                <span class="provider-name">Detectando...</span>
+            </div>
+        </header>
+
+        <!-- Stats Dashboard -->
+        <section class="stats-dashboard">
+            <div class="stat-card primary">
+                <span class="stat-number" id="totalEmails">0</span>
+                <span class="stat-label">Emails analizados</span>
+            </div>
+            <div class="stat-card warning">
+                <span class="stat-number" id="spamCount">0</span>
+                <span class="stat-label">Spam/Promos</span>
+            </div>
+            <div class="stat-card info">
+                <span class="stat-number" id="newsletterCount">0</span>
+                <span class="stat-label">Newsletters</span>
+            </div>
+            <div class="stat-card success">
+                <span class="stat-number" id="savedSpace">0 MB</span>
+                <span class="stat-label">Espacio ahorrado</span>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories">
+            <h2 class="section-title">📂 Categorías</h2>
+            <div class="category-list" id="categoryList">
+                <div class="category-item" data-category="newsletters">
+                    <input type="checkbox" id="cat-newsletters">
+                    <label for="cat-newsletters">
+                        <span class="cat-icon">📰</span>
+                        <span class="cat-name">Newsletters</span>
+                        <span class="cat-count" id="count-newsletters">0</span>
+                    </label>
+                </div>
+                <div class="category-item" data-category="promotions">
+                    <input type="checkbox" id="cat-promotions">
+                    <label for="cat-promotions">
+                        <span class="cat-icon">🏷️</span>
+                        <span class="cat-name">Promociones</span>
+                        <span class="cat-count" id="count-promotions">0</span>
+                    </label>
+                </div>
+                <div class="category-item" data-category="social">
+                    <input type="checkbox" id="cat-social">
+                    <label for="cat-social">
+                        <span class="cat-icon">👥</span>
+                        <span class="cat-name">Redes Sociales</span>
+                        <span class="cat-count" id="count-social">0</span>
+                    </label>
+                </div>
+                <div class="category-item" data-category="notifications">
+                    <input type="checkbox" id="cat-notifications">
+                    <label for="cat-notifications">
+                        <span class="cat-icon">🔔</span>
+                        <span class="cat-name">Notificaciones</span>
+                        <span class="cat-count" id="count-notifications">0</span>
+                    </label>
+                </div>
+                <div class="category-item" data-category="old">
+                    <input type="checkbox" id="cat-old">
+                    <label for="cat-old">
+                        <span class="cat-icon">📅</span>
+                        <span class="cat-name">Antiguos (+30 días)</span>
+                        <span class="cat-count" id="count-old">0</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Senders -->
+        <section class="top-senders">
+            <h2 class="section-title">📊 Top Remitentes</h2>
+            <div class="sender-list" id="senderList">
+                <div class="loading-placeholder">
+                    <span class="spinner"></span>
+                    Analizando bandeja...
+                </div>
+            </div>
+        </section>
+
+        <!-- Actions -->
+        <section class="actions">
+            <button class="btn btn-scan" id="btnScan">
+                <span class="btn-icon">🔍</span>
+                Escanear Bandeja
+            </button>
+            <button class="btn btn-delete" id="btnDelete" disabled>
+                <span class="btn-icon">🗑️</span>
+                Eliminar Seleccionados
+            </button>
+            <button class="btn btn-unsubscribe" id="btnUnsubscribe" disabled>
+                <span class="btn-icon">📧</span>
+                Desuscribirse
+            </button>
+        </section>
+
+        <!-- Quick Settings -->
+        <section class="quick-settings">
+            <div class="setting-item">
+                <label for="autoClean">🤖 Auto-limpiar promos +7 días</label>
+                <input type="checkbox" id="autoClean" class="toggle">
+            </div>
+            <div class="setting-item">
+                <label for="safeMode">🛡️ Modo seguro (previsualizar)</label>
+                <input type="checkbox" id="safeMode" class="toggle" checked>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span>Email Cleaner Pro v1.0</span>
+            <a href="#" id="settingsLink">⚙️ Configuración</a>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
