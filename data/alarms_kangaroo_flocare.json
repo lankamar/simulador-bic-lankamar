@@ -1,0 +1,28 @@
+{
+  "enteral_pumps": [
+    {
+      "device_id": "cardinal_kangaroo_omni",
+      "name": "Cardinal Health Kangaroo OMNI",
+      "type": "Enteral Feeding Pump",
+      "alarms": [
+        {"code": "FEED_ERROR", "display": "Feed error", "priority": "HIGH", "cause": "Bolsa vacía u oclusión", "actions": ["Check formula volume", "Inspect tube", "Replace bag if empty"]},
+        {"code": "FLOW_ERROR", "display": "Flow error", "priority": "HIGH", "cause": "Problemas de flujo", "actions": ["Check pump motor", "Verify cassette", "Restart pump"]},
+        {"code": "OCCLUSION", "display": "Occlusion detected", "priority": "HIGH", "cause": "Sonda obstruida o tubo acodado", "actions": ["Check feeding tube", "Reposition tubing", "Attempt flush"]},
+        {"code": "DOOR_OPEN", "display": "Door open", "priority": "MEDIUM", "cause": "Cassette no insertado", "actions": ["Close pump door", "Reinsert cassette", "Verify it clicks"]},
+        {"code": "LOW_BATT", "display": "Low battery", "priority": "MEDIUM", "cause": "Batería <20%", "actions": ["Connect to AC", "Monitor charge indicator"]}
+      ]
+    },
+    {
+      "device_id": "nutricia_flocare_infinity",
+      "name": "Nutricia Flocare Infinity+",
+      "type": "Portable Enteral Pump",
+      "alarms": [
+        {"code": "NO_SET", "display": "NO SET - cassette missing", "priority": "HIGH", "cause": "Cassette no insertado", "actions": ["Insert Flocare cassette", "Verify click", "Check barcode match"]},
+        {"code": "OCC_IN", "display": "Occlusion proximal", "priority": "HIGH", "cause": "Bolsa comprimida o tubo acodado", "actions": ["Release bag pressure", "Check tubing path", "Straighten any kinks"]},
+        {"code": "OCC_OUT", "display": "Occlusion distal", "priority": "HIGH", "cause": "Sonda del paciente obstruida", "actions": ["Check patient feeding tube", "Verify tube not kinked", "Attempt gentle flush"]},
+        {"code": "AIR", "display": "Air detected", "priority": "MEDIUM", "cause": "Aire en la línea", "actions": ["Check formula bag level", "Purge air from tubing", "Verify continuous flow"]},
+        {"code": "BATT", "display": "Battery low", "priority": "MEDIUM", "cause": "Batería agotada", "actions": ["Plug into AC charger", "Allow 2-3 hours charge", "Use backup pump if urgent"]}
+      ]
+    }
+  ]
+}
