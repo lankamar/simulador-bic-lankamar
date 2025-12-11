@@ -69,6 +69,29 @@ Recomendación: para usuarios en celular compartí el link con `?mobile=true`.
 - Consulta el PDF `docs/SiBIC_BOMBAS_REFERENCIA.pdf` para tener una versión imprimible de las 7 bombas con procedimientos y tabla comparativa.
 - Para regenerar el PDF usa `scripts/generate_pdf_bombas.py` (requiere `reportlab`).
 
+- ## 📊 Códigos de Alarma Documentados
+
+### Nuevas Bombas Agregadas (Dic 2025)
+
+- **ICU Medical Plum 360** (IV Volumétrica): 5+ códigos de alarma
+  - E301, E302, N58, DISTAL_OCCLUSION, PROXIMAL_AIR
+  - [Ver: `data/alarms_plum360_complete.json`](data/alarms_plum360_complete.json)
+
+- **Cardinal Health Kangaroo OMNI** (Enteral): 5+ códigos
+  - FEED_ERROR, FLOW_ERROR, OCCLUSION, DOOR_OPEN, LOW_BATT
+  - [Ver: `data/alarms_kangaroo_flocare.json`](data/alarms_kangaroo_flocare.json)
+
+- **Nutricia Flocare Infinity+** (Enteral Portátil): 5+ códigos  
+  - NO_SET, OCC_IN, OCC_OUT, AIR, BATT
+  - [Ver: `data/alarms_kangaroo_flocare.json`](data/alarms_kangaroo_flocare.json)
+
+### Documentación Técnica
+
+- Guía de integración: [`docs/ALARM_CODES_INTEGRATION.md`](docs/ALARM_CODES_INTEGRATION.md)
+- Total de códigos: **116+ alarmas** (7 bombas IV + 3 bombasenterales)
+
+
+
 ## 📄 Licencia
 
 Propietario: **Marcelo Lancry (Lankamar)** - Todos los derechos reservados.
