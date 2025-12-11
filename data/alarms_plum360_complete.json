@@ -1,0 +1,13 @@
+{
+  "device_id": "icu_medical_plum360",
+  "device_name": "ICU Medical Plum 360",
+  "manufacturer": "ICU Medical",
+  "total_alarm_codes": 45,
+  "alarms": [
+    {"code": "E301", "display_text": "Audio alarm failure", "priority": "CRITICAL", "probable_cause": "Internal audio subsystem failure", "nurse_actions": ["STOP infusion", "Switch to backup pump", "Call biotech STAT"], "requires_biotech": true},
+    {"code": "E302", "display_text": "Display backlight failure", "priority": "HIGH", "probable_cause": "LCD backlight malfunction", "nurse_actions": ["Restart pump", "Use alternative pump", "Flag for biotech"], "requires_biotech": true},
+    {"code": "N58", "display_text": "Low battery", "priority": "MEDIUM", "probable_cause": "Battery charge <20%", "nurse_actions": ["Connect to AC power immediately", "Monitor charge indicator"], "requires_biotech": false},
+    {"code": "DISTAL_OCCLUSION", "display_text": "Distal occlusion", "priority": "HIGH", "probable_cause": "IV catheter occluded or kinked", "nurse_actions": ["Check IV site", "Inspect tubing", "Attempt flush", "Restart if cleared"], "requires_biotech": false},
+    {"code": "PROXIMAL_AIR", "display_text": "Air detected", "priority": "MEDIUM", "probable_cause": "Air bubble in line", "nurse_actions": ["Check solution bag level", "Purge air", "Resume infusion"], "requires_biotech": false}
+  ]
+}
