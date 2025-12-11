@@ -473,6 +473,216 @@
         "video_url": "https://placeholder.com/video/agilia-bolus",
         "difficulty": "intermediate"
       }
+    ],
+  {
+    "id": "icu_medical_plum360",
+    "name": "ICU Medical Plum 360",
+    "manufacturer": "ICU Medical",
+    "category": "IV Volumetric Pump",
+    "specs": {
+      "dimensions": "25 x 15 x 10 cm",
+      "weight": "2.1 kg",
+      "battery_type": "Lithium-ion rechargeable",
+      "display": "LCD with backlight"
+    },
+    "views": {
+      "frontal": {
+        "description": "Color touchscreen with quick-access buttons and infusion rate display.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Compact side profile with IV line connectors.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Power port, wireless connectivity, and service access.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_plum360_start",
+        "name": "Start",
+        "location": "center",
+        "function": "Inicia la infusión programada",
+        "related_errors": [1, 2, 3]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar infusión IV",
+        "steps": [
+          "Seleccionar tipo de medicamento",
+          "Ingresar volumen y velocidad",
+          "Confirmar con Start"
+        ],
+        "video_url": "https://placeholder.com/video/plum360-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Detener infusión",
+        "available": true,
+        "steps": [
+          "Presionar Stop",
+          "Confirmar detención",
+          "Revisar línea IV"
+        ],
+        "video_url": "https://placeholder.com/video/plum360-stop",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Cambiar velocidad de infusión",
+        "available": true,
+        "steps": [
+          "Seleccionar opción Rate Adjust",
+          "Ingresar nueva velocidad",
+          "Confirmar cambio"
+        ],
+        "video_url": "https://placeholder.com/video/plum360-rate",
+        "difficulty": "basic"
+      }
     ]
+  },
+  {
+    "id": "cardinal_kangaroo_omni",
+    "name": "Cardinal Health Kangaroo OMNI",
+    "manufacturer": "Cardinal Health",
+    "category": "Enteral Feeding Pump",
+    "specs": {
+      "dimensions": "22 x 14 x 8 cm",
+      "weight": "1.8 kg",
+      "battery_type": "AA Alkaline or Rechargeable",
+      "display": "LCD with LED indicators"
+    },
+    "views": {
+      "frontal": {
+        "description": "Simple interface with cassette door and status lights.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Formula bag bracket and tubing management system.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Battery compartment and feeding tube outlet.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_kangaroo_start",
+        "name": "Start",
+        "location": "center",
+        "function": "Inicia la alimentación enteral",
+        "related_errors": [100, 101, 102]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar alimentación enteral",
+        "steps": [
+          "Insertar cassette de alimentación",
+          "Seleccionar volumen",
+          "Seleccionar velocidad de flujo",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/kangaroo-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Manejar oclusión de tubo",
+        "available": true,
+        "steps": [
+          "Pausar alimentación",
+          "Verificar tubo de alimentación",
+          "Intentar desocluir suavemente",
+          "Reintentar infusión"
+        ],
+        "video_url": "https://placeholder.com/video/kangaroo-occlusion",
+        "difficulty": "intermediate"
+      },
+      {
+        "name": "Cambiar velocidad de alimentación",
+        "available": true,
+        "steps": [
+          "Pausar infusión",
+          "Seleccionar nuevo flujo",
+          "Reanudar"
+        ],
+        "video_url": "https://placeholder.com/video/kangaroo-rate",
+        "difficulty": "basic"
+      }
+    ]
+  },
+  {
+    "id": "nutricia_flocare_infinity",
+    "name": "Nutricia Flocare Infinity+",
+    "manufacturer": "Nutricia",
+    "category": "Portable Enteral Pump",
+    "specs": {
+      "dimensions": "20 x 13 x 7 cm",
+      "weight": "1.5 kg",
+      "battery_type": "Rechargeable Lithium (2-3 hours per charge)",
+      "display": "Backlit LCD with icons"
+    },
+    "views": {
+      "frontal": {
+        "description": "Compact interface with cassette slot and barcode reader.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Lightweight design with shoulder strap attachment points.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "USB charging port and tubing outlet.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_flocare_start",
+        "name": "Start",
+        "location": "center",
+        "function": "Inicia la alimentación portátil",
+        "related_errors": [200, 201, 202]
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar alimentación portátil",
+        "steps": [
+          "Insertar cassette Flocare",
+          "Escanear código de barras",
+          "Verificar parámetros de bolsa",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/flocare-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Mantener portabilidad",
+        "available": true,
+        "steps": [
+          "Verificar carga de batería",
+          "Asegurar correa de hombro",
+          "Monitorear durante movilización"
+        ],
+        "video_url": "https://placeholder.com/video/flocare-mobility",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Recargar batería en movimiento",
+        "available": true,
+        "steps": [
+          "Conectar puerto USB a power bank",
+          "Continuar alimentación",
+          "Monitorear tiempo restante"
+        ],
+        "video_url": "https://placeholder.com/video/flocare-charge",
+        "difficulty": "basic"
+      }
+    ]
+  }
   }
 ]
