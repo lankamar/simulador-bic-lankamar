@@ -13,13 +13,30 @@ Herramienta de bolsillo que permite a enfermeros/as:
 2. **Simular** la interfaz operativa para practicar sin riesgo
 3. **Resolver** fallas mediante guías rápidas y videos
 
-## 📱 Bombas Soportadas (MVP)
+## 📱 Bombas Soportadas
+
+### Modelos Principales (MVP)
 
 | Marca | Modelo | Prevalencia |
 |-------|--------|-------------|
 | Baxter | Sigma Spectrum | Alta (Privado/UCI) |
 | B. Braun | Infusomat Space | Alta (Público/Privado) |
 | Innovo | MI-20 | Media (Hospitales Provinciales) |
+
+### Modelos Adicionales
+
+| Marca | Modelo | Prevalencia |
+|-------|--------|-------------|
+| Mindray | BeneFusion SP5 | Media-Alta (UCI) |
+| Samtronic | ST-670 | Media (Hospitales Públicos) |
+| BD | Alaris System | Alta (Privado/UCI) |
+| Fresenius Kabi | Agilia VP | Baja-Media (UCI Privado) |
+| Hospira | Plum A+ | Alta (Público/Privado) |
+| Terumo | TE-331 | Media (Hospitales Públicos) |
+| IMED | Gemini PC-2TX | Baja (Equipos Legacy) |
+| Smiths Medical | CADD-Solis | Media (Oncología/Paliativos) |
+
+**Total: 11 modelos de bombas con 136+ alarmas y errores documentados**
 
 ## 🛠️ Stack Tecnológico
 

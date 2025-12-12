@@ -212,7 +212,7 @@
       "dimensions": "41 x 28 x 16 cm",
       "weight": "4.5 kg",
       "battery_type": "Ion de litio inteligente",
-      "display": "Pantalla TFT con controles touch",
+      "display": "Pantalla TFT con controles touch"
     },
     "views": {
       "frontal": {
@@ -408,7 +408,7 @@
     ]
   },
   {
-    "id": "fresenius_agilia_vp",
+    "id": "fresenius_agilia",
     "name": "Fresenius Kabi Agilia VP",
     "manufacturer": "Fresenius Kabi",
     "category": "Large Volume Pump",
@@ -680,6 +680,321 @@
           "Monitorear tiempo restante"
         ],
         "video_url": "https://placeholder.com/video/flocare-charge",
+        "difficulty": "basic"
+      }
+    ]
+  },
+  {
+    "id": "hospira_plum_a_plus",
+    "name": "Hospira Plum A+",
+    "manufacturer": "Hospira",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "38 x 20 x 11 cm",
+      "weight": "3.1 kg",
+      "battery_type": "Ion de litio recargable",
+      "display": "Pantalla LCD color de alto contraste"
+    },
+    "views": {
+      "frontal": {
+        "description": "Panel frontal con teclado numérico completo y pantalla LCD color.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Vista lateral con sensores de presión y ranura para set.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Conectores de alimentación y puertos de comunicación.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_plum_start",
+        "name": "Start",
+        "location": "bottom_center",
+        "function": "Inicia la infusión programada",
+        "related_errors": [801, 805]
+      },
+      {
+        "id": "btn_plum_stop",
+        "name": "Stop",
+        "location": "bottom_center",
+        "function": "Detiene la infusión actual",
+        "related_errors": []
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Seleccionar modo de infusión",
+          "Ingresar velocidad y volumen",
+          "Presionar Start para iniciar"
+        ],
+        "video_url": "https://placeholder.com/video/plum-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": false,
+        "steps": [
+          "Modelo de canal único"
+        ],
+        "video_url": "https://placeholder.com/video/plum-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Seleccionar modo bolo",
+          "Definir volumen y tiempo",
+          "Confirmar con Start"
+        ],
+        "video_url": "https://placeholder.com/video/plum-bolus",
+        "difficulty": "basic"
+      }
+    ]
+  },
+  {
+    "id": "terumo_te331",
+    "name": "Terumo TE-331",
+    "manufacturer": "Terumo",
+    "category": "Large Volume Pump",
+    "specs": {
+      "dimensions": "35 x 19 x 10 cm",
+      "weight": "2.8 kg",
+      "battery_type": "NiMH recargable",
+      "display": "LCD monocromático retroiluminado"
+    },
+    "views": {
+      "frontal": {
+        "description": "Panel con teclado numérico y pantalla LCD simple.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Mecanismo de puerta con indicadores LED.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Puerto de alimentación y salida de alarma.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_terumo_start",
+        "name": "Start",
+        "location": "bottom_left",
+        "function": "Inicia la infusión",
+        "related_errors": [901]
+      },
+      {
+        "id": "btn_terumo_stop",
+        "name": "Stop",
+        "location": "bottom_right",
+        "function": "Detiene la infusión",
+        "related_errors": []
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Ingresar velocidad con teclado numérico",
+          "Configurar volumen total",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/terumo-program",
+        "difficulty": "basic"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": false,
+        "steps": [
+          "No disponible - canal único"
+        ],
+        "video_url": "https://placeholder.com/video/terumo-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": false,
+        "steps": [
+          "No disponible en este modelo"
+        ],
+        "video_url": "https://placeholder.com/video/terumo-bolus",
+        "difficulty": "intermediate"
+      }
+    ]
+  },
+  {
+    "id": "imed_gemini_pc2tx",
+    "name": "IMED Gemini PC-2TX",
+    "manufacturer": "IMED",
+    "category": "Dual Channel Pump",
+    "specs": {
+      "dimensions": "42 x 24 x 14 cm",
+      "weight": "4.2 kg",
+      "battery_type": "NiCd recargable",
+      "display": "LCD monocromático 2 líneas"
+    },
+    "views": {
+      "frontal": {
+        "description": "Panel con dos áreas de programación (primaria/secundaria).",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Dos puertas independientes para cada canal.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Conectores de alimentación y comunicación.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_imed_primary",
+        "name": "Primary",
+        "location": "left_side",
+        "function": "Selecciona canal primario",
+        "related_errors": [1001]
+      },
+      {
+        "id": "btn_imed_secondary",
+        "name": "Secondary",
+        "location": "right_side",
+        "function": "Selecciona canal secundario",
+        "related_errors": [1002]
+      },
+      {
+        "id": "btn_imed_start",
+        "name": "Start",
+        "location": "bottom_center",
+        "function": "Inicia canal seleccionado",
+        "related_errors": []
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Seleccionar canal (Primary/Secondary)",
+          "Ingresar parámetros de infusión",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/imed-program",
+        "difficulty": "intermediate"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": true,
+        "steps": [
+          "Programar canal primario",
+          "Seleccionar secundario y programar",
+          "Iniciar ambos canales"
+        ],
+        "video_url": "https://placeholder.com/video/imed-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": false,
+        "steps": [
+          "No disponible - usar canal secundario para bolo manual"
+        ],
+        "video_url": "https://placeholder.com/video/imed-bolus",
+        "difficulty": "intermediate"
+      }
+    ]
+  },
+  {
+    "id": "smiths_cadd_solis",
+    "name": "Smiths Medical CADD-Solis",
+    "manufacturer": "Smiths Medical",
+    "category": "Ambulatory Pump",
+    "specs": {
+      "dimensions": "14 x 9 x 4 cm",
+      "weight": "0.35 kg",
+      "battery_type": "Ion de litio o 4xAA alcalinas",
+      "display": "LCD segmentado de alto contraste"
+    },
+    "views": {
+      "frontal": {
+        "description": "Diseño compacto con 4 botones y pantalla LCD.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "lateral": {
+        "description": "Ranura para reservorio y clip de cinturón.",
+        "image_url": "https://placeholder.com/640x360"
+      },
+      "trasera": {
+        "description": "Compartimento de batería y puerto de carga.",
+        "image_url": "https://placeholder.com/640x360"
+      }
+    },
+    "buttons": [
+      {
+        "id": "btn_cadd_select",
+        "name": "Select",
+        "location": "top_left",
+        "function": "Navega por opciones del menú",
+        "related_errors": []
+      },
+      {
+        "id": "btn_cadd_next",
+        "name": "Next",
+        "location": "top_right",
+        "function": "Avanza al siguiente campo",
+        "related_errors": []
+      },
+      {
+        "id": "btn_cadd_start",
+        "name": "Start",
+        "location": "bottom_left",
+        "function": "Inicia la infusión programada",
+        "related_errors": [1101]
+      },
+      {
+        "id": "btn_cadd_stop",
+        "name": "Stop",
+        "location": "bottom_right",
+        "function": "Detiene la infusión",
+        "related_errors": []
+      }
+    ],
+    "operations": [
+      {
+        "name": "Programar goteo nuevo",
+        "steps": [
+          "Usar Select y Next para navegar menú",
+          "Ingresar velocidad y volumen",
+          "Presionar Start para iniciar"
+        ],
+        "video_url": "https://placeholder.com/video/cadd-program",
+        "difficulty": "intermediate"
+      },
+      {
+        "name": "Administrar goteo paralelo",
+        "available": false,
+        "steps": [
+          "Bomba de canal único - no disponible"
+        ],
+        "video_url": "https://placeholder.com/video/cadd-parallel",
+        "difficulty": "advanced"
+      },
+      {
+        "name": "Administrar bolo",
+        "available": true,
+        "steps": [
+          "Seleccionar modo bolo en menú",
+          "Configurar dosis",
+          "Presionar Start"
+        ],
+        "video_url": "https://placeholder.com/video/cadd-bolus",
         "difficulty": "basic"
       }
     ]

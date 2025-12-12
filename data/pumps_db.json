@@ -1077,5 +1077,441 @@
             }
         ],
         "datos_incompletos": []
+    },
+    {
+        "id": "hospira_plum_a_plus",
+        "marca": "Hospira",
+        "modelo": "Plum A+",
+        "tipo": "Volumétrica Inteligente (LVP)",
+        "prevalencia_arg": "Alta (Público/Privado)",
+        "specs_tecnicas": {
+            "rango_flujo": "0.1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "Hospira LifeShield o Standard",
+            "bateria": "Ion-Litio (6 horas)",
+            "presion_max": "300 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "50 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "AC 100-240V 50/60Hz",
+            "tipo_bateria": "Ion-Litio recargable",
+            "autonomia_declarada": "6 horas @ 125 ml/h",
+            "tiempo_recarga": "4 horas (0-100%)",
+            "alarmas_energia": [
+                "LOW BATTERY",
+                "DEPLETED BATTERY",
+                "AC POWER FAILURE"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "50-300 configurable (Low/Med/High)",
+            "aire_ml": ">0.5 ml burbuja detectada"
+        },
+        "interfaz": {
+            "pantalla": "LCD Color de alto contraste",
+            "teclado": "Teclado numérico + teclas de función",
+            "navegacion": "Navegación por menú con teclas direccionales"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire detectado en el sistema de infusión",
+                "accion_correctiva": "Pausar bomba, purgar línea, verificar conexiones y reiniciar.",
+                "video_tag": "hospira_air_fix",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "OCCLUSION",
+                "significado": "Presión excesiva detectada en la línea",
+                "accion_correctiva": "Verificar catéter, clamps, acodamientos y presión de umbral.",
+                "video_tag": "hospira_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "UPSTREAM OCCLUSION",
+                "significado": "Flujo reducido desde contenedor de solución",
+                "accion_correctiva": "Verificar bolsa vacía, roller clamp cerrado o línea doblada.",
+                "video_tag": "hospira_upstream",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "DOOR OPEN",
+                "significado": "Puerta de la bomba no está completamente cerrada",
+                "accion_correctiva": "Asegurar que el set esté correctamente posicionado y cerrar firmemente.",
+                "video_tag": "hospira_door",
+                "prioridad": "media",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "LOW BATTERY",
+                "significado": "Batería por debajo del 30%",
+                "accion_correctiva": "Conectar a fuente de alimentación AC lo antes posible.",
+                "video_tag": "hospira_battery_low",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "DEPLETED BATTERY",
+                "significado": "Batería críticamente baja - bomba se detendrá pronto",
+                "accion_correctiva": "Conectar INMEDIATAMENTE a AC o la bomba se apagará.",
+                "video_tag": "hospira_battery_critical",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "KVO ACTIVE",
+                "significado": "Modo Keep Vein Open activado - flujo mínimo",
+                "accion_correctiva": "Informativo - bomba funcionando en modo KVO a 1 ml/h.",
+                "video_tag": "hospira_kvo",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "VOLUME COMPLETE",
+                "significado": "Volumen programado completamente infundido",
+                "accion_correctiva": "Verificar indicación, detener o programar nuevo volumen.",
+                "video_tag": "hospira_volume_complete",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "SET NOT LOADED",
+                "significado": "Set de infusión no detectado o mal instalado",
+                "accion_correctiva": "Retirar y reinstalar set correctamente en el mecanismo de bombeo.",
+                "video_tag": "hospira_set_error",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "SYRINGE EMPTY",
+                "significado": "Jeringa vacía detectada (en modo jeringa)",
+                "accion_correctiva": "Reemplazar jeringa vacía por una nueva y purgar sistema.",
+                "video_tag": "hospira_syringe",
+                "prioridad": "alta",
+                "categoria": "volumen"
+            }
+        ],
+        "datos_incompletos": []
+    },
+    {
+        "id": "terumo_te331",
+        "marca": "Terumo",
+        "modelo": "TE-331",
+        "tipo": "Volumétrica Estándar",
+        "prevalencia_arg": "Media (Hospitales Públicos)",
+        "specs_tecnicas": {
+            "rango_flujo": "1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "Terumo Standard IV Set",
+            "bateria": "NiMH (4 horas)",
+            "presion_max": "250 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "100 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "AC 100-240V 50/60Hz",
+            "tipo_bateria": "NiMH recargable",
+            "autonomia_declarada": "4 horas @ 100 ml/h",
+            "tiempo_recarga": "5 horas (0-100%)",
+            "alarmas_energia": [
+                "BAT LOW",
+                "BAT EXHAUSTED",
+                "AC FAIL"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "60-250 mmHg configurable",
+            "aire_ml": ">0.2 ml detectado"
+        },
+        "interfaz": {
+            "pantalla": "LCD Monocromático retroiluminado",
+            "teclado": "Teclado numérico físico",
+            "navegacion": "Navegación simple por teclas UP/DOWN"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "AIR",
+                "significado": "Aire detectado en línea de infusión",
+                "accion_correctiva": "Detener infusión, purgar aire y verificar conexiones.",
+                "video_tag": "terumo_air",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "OCCL",
+                "significado": "Oclusión detectada en el sistema",
+                "accion_correctiva": "Verificar líneas, catéter y eliminar obstrucciones.",
+                "video_tag": "terumo_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "DOOR",
+                "significado": "Puerta abierta o mal cerrada",
+                "accion_correctiva": "Cerrar puerta hasta escuchar clic de seguridad.",
+                "video_tag": "terumo_door",
+                "prioridad": "media",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "BAT LOW",
+                "significado": "Batería baja - menos del 25%",
+                "accion_correctiva": "Conectar a alimentación AC inmediatamente.",
+                "video_tag": "terumo_battery",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "BAT EXHAUSTED",
+                "significado": "Batería agotada - apagado inminente",
+                "accion_correctiva": "Conectar URGENTEMENTE a AC o la bomba se detendrá.",
+                "video_tag": "terumo_battery_critical",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "END",
+                "significado": "Infusión completada según programación",
+                "accion_correctiva": "Verificar paciente y reprogramar si es necesario.",
+                "video_tag": "terumo_end",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "FREE FLOW",
+                "significado": "Flujo libre detectado - posible fallo mecánico",
+                "accion_correctiva": "DETENER INMEDIATAMENTE, verificar set y clamps.",
+                "video_tag": "terumo_freeflow",
+                "prioridad": "critica",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "SET ERROR",
+                "significado": "Set no instalado correctamente",
+                "accion_correctiva": "Retirar y reinstalar set según indicaciones del manual.",
+                "video_tag": "terumo_set",
+                "prioridad": "alta",
+                "categoria": "set"
+            }
+        ],
+        "datos_incompletos": []
+    },
+    {
+        "id": "imed_gemini_pc2tx",
+        "marca": "IMED",
+        "modelo": "Gemini PC-2TX",
+        "tipo": "Volumétrica Dual Canal",
+        "prevalencia_arg": "Baja (Equipos Legacy)",
+        "specs_tecnicas": {
+            "rango_flujo": "1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "IMED Standard IV Set",
+            "bateria": "NiCd (2 horas)",
+            "presion_max": "200 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "150 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "AC 110-240V 50/60Hz",
+            "tipo_bateria": "NiCd recargable",
+            "autonomia_declarada": "2 horas @ 100 ml/h",
+            "tiempo_recarga": "6 horas (0-100%)",
+            "alarmas_energia": [
+                "LOW BATT",
+                "PLUG IN",
+                "AC LOST"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "50-200 mmHg fijo",
+            "aire_ml": ">0.3 ml detectado"
+        },
+        "interfaz": {
+            "pantalla": "LCD Monocromático 2 líneas",
+            "teclado": "Teclado numérico + teclas primarias/secundarias",
+            "navegacion": "Selección de canal primario/secundario"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire en una o ambas líneas de infusión",
+                "accion_correctiva": "Identificar canal afectado, pausar y purgar sistema.",
+                "video_tag": "imed_air",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "OCCLUSION",
+                "significado": "Presión excesiva en línea primaria o secundaria",
+                "accion_correctiva": "Identificar canal, verificar acceso venoso y eliminar obstrucción.",
+                "video_tag": "imed_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "DOOR OPEN",
+                "significado": "Puerta del canal no cerrada correctamente",
+                "accion_correctiva": "Cerrar puerta del canal afectado hasta oír clic.",
+                "video_tag": "imed_door",
+                "prioridad": "media",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "LOW BATT",
+                "significado": "Batería con carga baja",
+                "accion_correctiva": "Conectar a alimentación eléctrica.",
+                "video_tag": "imed_battery",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "PLUG IN",
+                "significado": "Batería crítica - requiere AC inmediato",
+                "accion_correctiva": "Conectar URGENTEMENTE a corriente o bomba se apagará.",
+                "video_tag": "imed_battery_critical",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "VOLUME DONE",
+                "significado": "Volumen programado completado en un canal",
+                "accion_correctiva": "Verificar indicación médica y reprogramar si necesario.",
+                "video_tag": "imed_volume_done",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "CASSETTE ERROR",
+                "significado": "Casete no detectado o mal instalado",
+                "accion_correctiva": "Reinstalar casete correctamente en el canal.",
+                "video_tag": "imed_cassette",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "SYSTEM ERROR",
+                "significado": "Error interno del sistema - requiere reset",
+                "accion_correctiva": "Apagar, esperar 30 seg, encender. Si persiste, llamar a servicio técnico.",
+                "video_tag": "imed_system",
+                "prioridad": "alta",
+                "categoria": "sistema"
+            }
+        ],
+        "datos_incompletos": []
+    },
+    {
+        "id": "smiths_cadd_solis",
+        "marca": "Smiths Medical",
+        "modelo": "CADD-Solis",
+        "tipo": "Bomba Ambulatoria Programable",
+        "prevalencia_arg": "Media (Oncología/Cuidados Paliativos)",
+        "specs_tecnicas": {
+            "rango_flujo": "0.1 - 999 ml/h",
+            "volumen_max": "9999 ml",
+            "tipo_set": "CADD Administration Set",
+            "bateria": "Ion-Litio (7 días uso continuo)",
+            "presion_max": "150 mmHg",
+            "precision_flujo": "+/- 5%",
+            "sensibilidad_aire": "100 µl"
+        },
+        "energia_bateria": {
+            "tipo_alimentacion": "Batería recargable o AA alcalinas",
+            "tipo_bateria": "Ion-Litio recargable o 4xAA",
+            "autonomia_declarada": "7 días @ 2 ml/h uso ambulatorio",
+            "tiempo_recarga": "4 horas (batería Ion-Litio)",
+            "alarmas_energia": [
+                "BATTERY LOW",
+                "REPLACE BATTERY",
+                "CHECK BATTERY"
+            ]
+        },
+        "umbrales": {
+            "oclusion_mmhg": "50-150 mmHg configurable",
+            "aire_ml": ">0.2 ml detectado"
+        },
+        "interfaz": {
+            "pantalla": "LCD segmentado de alto contraste",
+            "teclado": "4 botones (START, STOP, SELECT, NEXT)",
+            "navegacion": "Navegación por menú secuencial"
+        },
+        "errores_y_alarmas": [
+            {
+                "codigo_pantalla": "OCCLUSION",
+                "significado": "Presión elevada en línea de infusión",
+                "accion_correctiva": "Verificar catéter, sitio de inserción y eliminar acodamientos.",
+                "video_tag": "cadd_occlusion",
+                "prioridad": "alta",
+                "categoria": "oclusion"
+            },
+            {
+                "codigo_pantalla": "AIR IN LINE",
+                "significado": "Aire detectado en el set de administración",
+                "accion_correctiva": "Pausar bomba, purgar línea completamente y reiniciar.",
+                "video_tag": "cadd_air",
+                "prioridad": "alta",
+                "categoria": "aire"
+            },
+            {
+                "codigo_pantalla": "BATTERY LOW",
+                "significado": "Batería por debajo del 20%",
+                "accion_correctiva": "Recargar o reemplazar batería pronto.",
+                "video_tag": "cadd_battery_low",
+                "prioridad": "media",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "REPLACE BATTERY",
+                "significado": "Batería crítica - reemplazo urgente",
+                "accion_correctiva": "Reemplazar INMEDIATAMENTE batería o bomba se detendrá.",
+                "video_tag": "cadd_battery_replace",
+                "prioridad": "critica",
+                "categoria": "energia"
+            },
+            {
+                "codigo_pantalla": "RESERVOIR EMPTY",
+                "significado": "Reservorio vacío o casi vacío",
+                "accion_correctiva": "Reemplazar reservorio y purgar nueva línea.",
+                "video_tag": "cadd_reservoir",
+                "prioridad": "alta",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "DOSE COMPLETE",
+                "significado": "Dosis programada completamente administrada",
+                "accion_correctiva": "Verificar plan de tratamiento y reprogramar si necesario.",
+                "video_tag": "cadd_dose_complete",
+                "prioridad": "informativa",
+                "categoria": "volumen"
+            },
+            {
+                "codigo_pantalla": "SET ERROR",
+                "significado": "Set no instalado o instalado incorrectamente",
+                "accion_correctiva": "Verificar instalación correcta del set de administración.",
+                "video_tag": "cadd_set_error",
+                "prioridad": "alta",
+                "categoria": "set"
+            },
+            {
+                "codigo_pantalla": "MOTOR STALL",
+                "significado": "Motor bloqueado - posible fallo mecánico",
+                "accion_correctiva": "Detener bomba, verificar set y contactar servicio técnico si persiste.",
+                "video_tag": "cadd_motor",
+                "prioridad": "alta",
+                "categoria": "mecanica"
+            },
+            {
+                "codigo_pantalla": "PROGRAM ERROR",
+                "significado": "Error en programación o parámetros fuera de rango",
+                "accion_correctiva": "Revisar y reprogramar parámetros de infusión.",
+                "video_tag": "cadd_program",
+                "prioridad": "media",
+                "categoria": "sistema"
+            }
+        ],
+        "datos_incompletos": []
     }
 ]
