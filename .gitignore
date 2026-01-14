@@ -59,3 +59,7 @@ firebase_options.dart
 
 # Auth database
 backend/auth.db
+
+# Bible Vector Database (generated files)
+backend/biblia.txt
+backend/faiss_index/
